@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultados de Pesquisa — Oceani Beach Park Resort</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Nunito:wght@900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #1A1D3B;
+      --color-primary-light: #3A3F6E;
+      --color-primary-dark: #0E1028;
+      --color-accent: #4A3AFF;
+      --color-accent-hover: #3B2ECC;
+      --color-accent-light: #EEEAFF;
+      --color-warning: #E8A317;
+      --color-warning-light: #FFF8E7;
+      --color-danger: #C0392B;
+      --color-danger-light: #FDEDEB;
+      --color-surface: #FFFFFF;
+      --color-surface-alt: #F7F8FA;
+      --color-surface-hover: #F0F2F5;
+      --color-border: #E2E5EA;
+      --color-border-light: #EEF0F3;
+      --color-text-primary: #1A1D23;
+      --color-text-secondary: #5A6170;
+      --color-text-tertiary: #8B9099;
+      --color-text-inverse: #FFFFFF;
+      --color-member: #4A3AFF;
+      --color-member-light: #EEEAFF;
+      --color-member-bg: #E0DBFF;
+
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-size-xs: 0.6875rem;
+      --font-size-sm: 0.75rem;
+      --font-size-base: 0.875rem;
+      --font-size-md: 1rem;
+      --font-size-lg: 1.125rem;
+      --font-size-xl: 1.25rem;
+      --font-size-2xl: 1.5rem;
+
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 30px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.04);
+      --shadow-focus: 0 0 0 3px rgba(74, 58, 255, 0.25);
+
+      --transition-fast: 150ms ease;
+      --transition-base: 250ms ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-family);
+      font-size: var(--font-size-base);
+      color: var(--color-text-primary);
+      background: var(--color-surface-alt);
+      line-height: 1.5;
+    }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ===== HEADER (sticky, animated) ===== */
+    .header {
+      background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      transition: box-shadow 0.3s ease;
+    }
+    .header.scrolled {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    /* --- Main row (always visible): logo | [compact search] | actions --- */
+    .header-main {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    /* --- Logo --- */
+    .logo {
+      text-decoration: none;
+      display: flex;
+      align-items: baseline;
+      flex-shrink: 0;
+      gap: 0;
+      line-height: 1;
+    }
+    .logo-ux {
+      font-family: 'Nunito', sans-serif;
+      font-size: 32px;
+      font-weight: 900;
+      color: #1A1D3B;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+    .logo-dots {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-left: 1px;
+      align-self: flex-start;
+      margin-top: 2px;
+    }
+    .logo-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #4539F9;
+      display: block;
+    }
+    .logo-hoteis {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: #1A1D3B;
+      letter-spacing: 2px;
+      margin-left: 5px;
+      line-height: 1;
+    }
+
+    /* --- Compact search (inline, visible only when scrolled) --- */
+    .header-search-inline {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .header.scrolled .header-search-inline {
+      max-height: 60px;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* --- Header actions (always right-aligned) --- */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Login: text when default, icon when scrolled */
+    .header-login-text {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.3s ease, width 0.3s ease;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .header-login-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #E8E8E8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      flex-shrink: 0;
+      opacity: 0;
+      width: 0;
+      overflow: hidden;
+      transition: opacity 0.3s ease, width 0.3s ease;
+    }
+    .header-login-icon svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .header.scrolled .header-login-text {
+      opacity: 0;
+      width: 0;
+    }
+    .header.scrolled .header-login-icon {
+      opacity: 1;
+      width: 32px;
+    }
+
+    /* Brazil flag icon */
+    .flag-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      overflow: hidden;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #009739;
+    }
+
+    /* Cart icon */
+    .cart-icon {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      flex-shrink: 0;
+    }
+    .cart-icon:hover { color: var(--color-text-primary); }
+
+    /* --- Search row (full, below main row) --- */
+    .header-search-row {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 24px 20px;
+      display: flex;
+      justify-content: center;
+      max-height: 100px;
+      opacity: 1;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.25s ease, padding 0.3s ease;
+    }
+    .header.scrolled .header-search-row {
+      max-height: 0;
+      opacity: 0;
+      padding-bottom: 0;
+    }
+
+    /* ===== SEARCH BAR (Pill) ===== */
+    .search-pill {
+      max-width: 900px;
+      width: 100%;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 100px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 8px 10px 8px 24px;
+      transition: height 0.3s ease, padding 0.3s ease;
+    }
+    /* Compact pill in inline header */
+    .header-search-inline .search-pill {
+      height: 46px;
+      padding: 5px 6px 5px 18px;
+    }
+    .search-pill-field {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex: 1;
+      min-width: 0;
+      cursor: pointer;
+      padding: 0 var(--space-3);
+    }
+    .search-pill-field svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: var(--color-text-tertiary);
+    }
+    .search-pill-texts {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .search-pill-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      line-height: 18px;
+      transition: max-height 0.3s ease, opacity 0.2s ease;
+      max-height: 20px;
+      opacity: 1;
+      overflow: hidden;
+    }
+    .header-search-inline .search-pill-label {
+      max-height: 0;
+      opacity: 0;
+    }
+    .search-pill-value {
+      font-size: 13px;
+      font-weight: 400;
+      color: #909090;
+      line-height: 18px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: font-weight 0.2s ease, color 0.2s ease;
+    }
+    .header-search-inline .search-pill-value {
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+    .header-search-inline .search-pill-field svg {
+      width: 18px;
+      height: 18px;
+    }
+    .search-pill-divider {
+      width: 1px;
+      height: 30px;
+      background: #e0e0e0;
+      flex-shrink: 0;
+      transition: height 0.3s ease;
+    }
+    .header-search-inline .search-pill-divider { height: 24px; }
+    .search-pill-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: background var(--transition-fast), width 0.3s ease, height 0.3s ease;
+      margin-left: var(--space-3);
+    }
+    .header-search-inline .search-pill-btn {
+      width: 36px;
+      height: 36px;
+    }
+    .header-search-inline .search-pill-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+    .search-pill-btn:hover { background: var(--color-accent-hover); }
+
+    /* ===== MAIN ===== */
+    .main {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-6);
+    }
+
+    /* ===== RESULTS HEADER ===== */
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-6);
+    }
+    .results-meta { display: flex; align-items: baseline; gap: var(--space-3); }
+    .results-count { font-size: var(--font-size-2xl); font-weight: 700; }
+    .results-subtitle { font-size: var(--font-size-base); color: var(--color-text-secondary); }
+    .sort-select {
+      padding: var(--space-2) var(--space-4) var(--space-2) var(--space-3);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-size-base);
+      font-weight: 500;
+      color: var(--color-text-primary);
+      background: var(--color-surface);
+      font-family: inherit;
+    }
+
+    /* ===== HOTEL SUMMARY ===== */
+    .hotel-summary {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-light);
+      padding: var(--space-5) var(--space-6);
+      margin-bottom: var(--space-6);
+      display: flex;
+      gap: var(--space-5);
+      align-items: center;
+    }
+    .hotel-summary-image {
+      width: 100px; height: 70px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .hotel-summary-image img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .hotel-summary-name { font-size: var(--font-size-lg); font-weight: 700; margin-bottom: 2px; }
+    .hotel-summary-location {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+    .hotel-stars { display: flex; gap: 2px; margin-top: var(--space-1); }
+    .star { width: 14px; height: 14px; color: var(--color-warning); }
+    .hotel-summary-info { flex: 1; }
+    .rating-score {
+      width: 44px; height: 44px;
+      background: var(--color-primary);
+      color: #fff;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-lg);
+      font-weight: 700;
+      margin: 0 auto 2px;
+    }
+    .rating-label { font-size: var(--font-size-xs); color: var(--color-text-secondary); text-align: center; }
+
+    /* ===== ROOM GRID (3 columns) ===== */
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+    }
+
+    /* ===== ROOM CARD (Vertical) ===== */
+    .room-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-light);
+      overflow: hidden;
+      transition: box-shadow var(--transition-base);
+      display: flex;
+      flex-direction: column;
+    }
+    .room-card:hover { box-shadow: var(--shadow-md); }
+
+    /* Gallery */
+    .room-gallery {
+      position: relative;
+      height: 190px;
+      overflow: hidden;
+      background: var(--color-surface-alt);
+      flex-shrink: 0;
+    }
+    .room-gallery img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .room-gallery-counter {
+      position: absolute;
+      top: var(--space-2);
+      right: var(--space-2);
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      font-size: var(--font-size-xs);
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .room-gallery-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px; height: 28px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+    .room-card:hover .room-gallery-btn { opacity: 1; }
+    .room-gallery-btn.prev { left: var(--space-2); }
+    .room-gallery-btn.next { right: var(--space-2); }
+
+    .room-badge {
+      position: absolute;
+      top: var(--space-2);
+      left: var(--space-2);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 4px;
+      color: #fff;
+    }
+    .room-badge.popular { background: var(--color-member); }
+    .room-badge.urgency { background: var(--color-danger); }
+    .room-badge.sold-out-badge { background: var(--color-danger); }
+    .room-badge.restriction-badge { background: var(--color-danger); }
+
+    /* Room info */
+    .room-info {
+      padding: var(--space-4) var(--space-5);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .room-type-name {
+      font-size: var(--font-size-md);
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .room-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2) var(--space-3);
+    }
+    .room-feature {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+    .room-feature svg { width: 13px; height: 13px; color: var(--color-text-tertiary); flex-shrink: 0; }
+    .room-amenities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-1);
+    }
+    .room-amenity {
+      font-size: var(--font-size-xs);
+      padding: 2px 6px;
+      background: var(--color-surface-alt);
+      border-radius: 3px;
+      color: var(--color-text-secondary);
+    }
+
+    /* ===== CONFIGURATOR (below card info) ===== */
+    .room-config {
+      padding: 0 var(--space-5) var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      flex: 1;
+    }
+
+    .config-section {}
+    .config-label {
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      color: var(--color-text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: var(--space-2);
+    }
+
+    /* Toggle: Public / Member */
+    .price-toggle {
+      display: flex;
+      background: var(--color-surface-alt);
+      border-radius: var(--radius-md);
+      padding: 3px;
+      border: 1px solid var(--color-border);
+    }
+    .price-toggle-btn {
+      flex: 1;
+      padding: 6px var(--space-2);
+      border-radius: 7px;
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      transition: all var(--transition-fast);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    .price-toggle-btn.active {
+      background: var(--color-surface);
+      color: var(--color-text-primary);
+      box-shadow: var(--shadow-sm);
+    }
+    .price-toggle-btn.member-btn.active {
+      background: var(--color-member);
+      color: #fff;
+    }
+    .price-toggle-btn .toggle-discount {
+      font-size: 9px;
+      font-weight: 700;
+      background: var(--color-accent);
+      color: #fff;
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    .price-toggle-btn.member-btn.active .toggle-discount {
+      background: rgba(255,255,255,0.25);
+    }
+
+    /* Radio selectors (Figma style) */
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: color var(--transition-fast);
+    }
+    .radio-option:hover { color: var(--color-text-primary); }
+    .radio-option.active { color: var(--color-text-primary); font-weight: 500; }
+    .radio-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: border-color var(--transition-fast);
+    }
+    .radio-option.active .radio-dot {
+      border-color: var(--color-member);
+    }
+    .radio-dot-inner {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: transparent;
+      transition: background var(--transition-fast);
+    }
+    .radio-option.active .radio-dot-inner {
+      background: var(--color-member);
+    }
+
+    /* Payment method selector */
+    .payment-method {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--font-size-sm);
+      font-weight: 700;
+      color: var(--color-text-secondary);
+      padding: var(--space-3) 0;
+      cursor: pointer;
+      position: relative;
+      user-select: none;
+    }
+    .payment-method:hover { color: var(--color-text-primary); }
+    .payment-method svg { color: var(--color-accent); flex-shrink: 0; }
+    .payment-method .chevron-sm { width: 14px; height: 14px; color: var(--color-text-tertiary); transition: transform var(--transition-fast); }
+    .payment-method.open .chevron-sm { transform: rotate(180deg); }
+    .payment-dropdown {
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      right: 0;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      z-index: 10;
+      overflow: hidden;
+      display: none;
+    }
+    .payment-method.open .payment-dropdown { display: block; }
+    .payment-option {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: background var(--transition-fast);
+    }
+    .payment-option:hover { background: var(--color-surface-alt); }
+    .payment-option.active { color: var(--color-text-primary); font-weight: 600; background: var(--color-surface-alt); }
+    .payment-option svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .payment-option .payment-discount { font-size: var(--font-size-xs); font-weight: 600; color: var(--color-accent); margin-left: auto; }
+
+    /* Prestações & Pontos info lines */
+    .info-line {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-secondary);
+      margin-top: 4px;
+    }
+    .info-line strong {
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+
+    /* Esgotado / Restrições states */
+    .room-card.sold-out { opacity: 0.6; pointer-events: none; }
+    .room-card.sold-out .btn-reserve {
+      background: var(--color-border);
+      color: var(--color-text-tertiary);
+      cursor: not-allowed;
+    }
+    .room-card.restricted .btn-reserve {
+      background: var(--color-border);
+      color: var(--color-text-tertiary);
+      cursor: not-allowed;
+    }
+    .room-badge.sold-out-badge { background: var(--color-danger); }
+    .room-badge.restriction-badge { background: var(--color-danger); }
+
+    /* ===== PRICE BAR (bottom of card) ===== */
+    .room-price-bar {
+      border-top: 1px solid var(--color-border-light);
+      padding: var(--space-4) var(--space-5);
+      background: #FFFFFF;
+      margin-top: auto;
+    }
+    .room-price-bar.member-active {
+      background: var(--color-member-light);
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-3);
+    }
+    .price-display { display: flex; align-items: baseline; gap: var(--space-2); }
+    .price-original {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-tertiary);
+      text-decoration: line-through;
+    }
+    .price-current {
+      font-size: var(--font-size-2xl);
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+    .price-current .price-currency {
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+    }
+    .price-per-night {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-tertiary);
+      align-self: flex-end;
+      margin-bottom: 4px;
+    }
+    .price-breakdown {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-tertiary);
+    }
+    .price-saving {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      color: var(--color-accent);
+      background: var(--color-accent-light);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-top: 4px;
+    }
+    .price-saving.member-saving {
+      color: var(--color-member);
+      background: var(--color-member-bg);
+    }
+
+    .price-policy-summary {
+      display: flex;
+      gap: var(--space-3);
+      font-size: var(--font-size-xs);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-3);
+    }
+    .policy-item {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .policy-item svg { width: 12px; height: 12px; flex-shrink: 0; }
+    .policy-item.positive svg { color: var(--color-accent); }
+    .policy-item.negative svg { color: var(--color-text-tertiary); }
+    .policy-item.warning svg { color: var(--color-warning); }
+
+    .btn-reserve {
+      background: var(--color-accent);
+      color: #FFFFFF;
+      padding: var(--space-3) var(--space-5);
+      border-radius: 100px;
+      font-size: var(--font-size-md);
+      font-weight: 600;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+      width: 100%;
+      text-align: center;
+    }
+    .btn-reserve:hover {
+      filter: brightness(0.95);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+    .btn-reserve:active { transform: translateY(0); }
+
+    /* ===== TRUST STRIP ===== */
+    .trust-strip {
+      display: flex;
+      gap: var(--space-8);
+      justify-content: center;
+      padding: var(--space-8) var(--space-6);
+      margin-top: var(--space-4);
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+    .trust-icon {
+      width: 36px; height: 36px;
+      background: var(--color-accent-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-accent);
+      flex-shrink: 0;
+    }
+    .trust-text strong { display: block; font-weight: 600; color: var(--color-text-primary); }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--color-surface-alt);
+      color: var(--color-text-secondary);
+      border-top: 1px solid var(--color-border);
+      padding: var(--space-8) var(--space-6);
+      margin-top: var(--space-8);
+    }
+    .footer-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-text { font-size: var(--font-size-sm); }
+    .footer-links { display: flex; gap: var(--space-6); }
+    .footer-link {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      text-decoration: none;
+    }
+    .footer-link:hover { color: #fff; }
+
+
+    /* ===== MORE INFO LINK ===== */
+    .more-info-link {
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+      color: var(--color-accent);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: var(--space-1);
+    }
+    .more-info-link:hover { text-decoration: underline; }
+
+    /* ===== RADIO OPTION PRICE ===== */
+    .radio-option {
+      justify-content: space-between;
+    }
+    .radio-option-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .radio-option-price {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-tertiary);
+      font-weight: 500;
+      white-space: nowrap;
+      margin-left: auto;
+    }
+    .radio-option.active .radio-option-price {
+      color: var(--color-text-secondary);
+    }
+
+    /* ===== DISCOUNT TAGS ===== */
+    .discount-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-1);
+      margin-bottom: var(--space-2);
+    }
+    .discount-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .discount-tag.tag-percent {
+      background: #E8F5E9;
+      color: #2E7D32;
+    }
+    .discount-tag.tag-member {
+      background: rgba(69, 57, 249, 0.2);
+      color: var(--color-member);
+    }
+
+    /* ===== PAYMENT BADGE ===== */
+    .payment-badge {
+      font-size: 10px;
+      font-weight: 700;
+      background: #E8F5E9;
+      color: #2E7D32;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-left: 2px;
+    }
+
+    /* ===== RESERVE ROW (btn + cart) ===== */
+    .reserve-row {
+      display: flex;
+      gap: var(--space-2);
+      align-items: stretch;
+    }
+    .reserve-row .btn-reserve {
+      flex: 1;
+    }
+    .btn-cart {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all var(--transition-fast);
+      color: var(--color-text-secondary);
+    }
+    .btn-cart:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+      background: var(--color-accent-light);
+    }
+    .btn-cart svg { width: 20px; height: 20px; }
+
+    /* ===== URGENCY BADGE WITH CLOCK ===== */
+    .room-badge.urgency {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      border-radius: 20px;
+      padding: 5px 12px;
+    }
+    .room-badge.urgency svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes priceUpdate {
+      0% { transform: translateY(-4px); opacity: 0.4; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    .price-animate { animation: priceUpdate 0.3s ease-out; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1100px) {
+      .rooms-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 720px) {
+      .rooms-grid { grid-template-columns: 1fr; }
+      .trust-strip { flex-direction: column; gap: var(--space-4); }
+      .hotel-summary { flex-direction: column; text-align: center; }
+      .search-pill { border-radius: var(--radius-lg); height: auto; flex-wrap: wrap; padding: var(--space-4); gap: var(--space-3); }
+      .search-pill-field { flex-basis: calc(50% - var(--space-2)); }
+      .search-pill-divider { display: none; }
+      .header-actions { gap: var(--space-4); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="siteHeader">
+    <!-- Main row: logo | compact-search (appears on scroll) | actions -->
+    <div class="header-main">
+      <a href="#" class="logo">
+        <span class="logo-ux">UX</span><span class="logo-dots"><span class="logo-dot"></span><span class="logo-dot"></span></span><span class="logo-hoteis">HOTÉIS</span>
+      </a>
+
+      <!-- Compact search (fades in on scroll) -->
+      <div class="header-search-inline">
+        <div class="search-pill">
+          <div class="search-pill-field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div class="search-pill-texts">
+              <div class="search-pill-label">Onde quer ir?</div>
+              <div class="search-pill-value">Oceani Beach Park Resort</div>
+            </div>
+          </div>
+          <div class="search-pill-divider"></div>
+          <div class="search-pill-field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <div class="search-pill-texts">
+              <div class="search-pill-label">Quando quer ir?</div>
+              <div class="search-pill-value">Dom 7 Set — Seg 15 Set</div>
+            </div>
+          </div>
+          <div class="search-pill-divider"></div>
+          <div class="search-pill-field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            <div class="search-pill-texts">
+              <div class="search-pill-label">Quem vai?</div>
+              <div class="search-pill-value">1 Adulto · 1 Quarto</div>
+            </div>
+          </div>
+          <div class="search-pill-divider"></div>
+          <div class="search-pill-field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            <div class="search-pill-texts">
+              <div class="search-pill-label">Tem um desconto?</div>
+              <div class="search-pill-value">VERAO26</div>
+            </div>
+          </div>
+          <button class="search-pill-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Actions (always in the same position, right-aligned) -->
+      <div class="header-actions">
+        <a href="#" class="header-login-text">Login</a>
+        <div class="header-login-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="flag-icon" title="Brasil">
+          <svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#009739"/><polygon points="16,5 29,16 16,27 3,16" fill="#FFDF00"/><circle cx="16" cy="16" r="6" fill="#002776"/><path d="M10.5,16.5 Q16,13 21.5,16.5" fill="none" stroke="#fff" stroke-width="0.8"/></svg>
+        </div>
+        <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      </div>
+    </div>
+
+    <!-- Full search row (collapses on scroll) -->
+    <div class="header-search-row">
+      <div class="search-pill">
+        <div class="search-pill-field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div class="search-pill-texts">
+            <div class="search-pill-label">Onde quer ir?</div>
+            <div class="search-pill-value">Oceani Beach Park Resort</div>
+          </div>
+        </div>
+        <div class="search-pill-divider"></div>
+        <div class="search-pill-field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <div class="search-pill-texts">
+            <div class="search-pill-label">Quando quer ir?</div>
+            <div class="search-pill-value">Dom 7 Set — Seg 15 Set</div>
+          </div>
+        </div>
+        <div class="search-pill-divider"></div>
+        <div class="search-pill-field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          <div class="search-pill-texts">
+            <div class="search-pill-label">Quem vai?</div>
+            <div class="search-pill-value">1 Adulto · 1 Quarto</div>
+          </div>
+        </div>
+        <div class="search-pill-divider"></div>
+        <div class="search-pill-field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+          <div class="search-pill-texts">
+            <div class="search-pill-label">Tem um desconto?</div>
+            <div class="search-pill-value">VERAO26</div>
+          </div>
+        </div>
+        <button class="search-pill-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <div class="results-header">
+      <div class="results-meta">
+        <span class="results-count">7 quartos</span>
+        <span class="results-subtitle">disponíveis para 7–15 Set 2026</span>
+      </div>
+      <select class="sort-select">
+        <option>Recomendados</option>
+        <option>Preço: menor primeiro</option>
+        <option>Preço: maior primeiro</option>
+      </select>
+    </div>
+
+    <!-- Hotel Summary -->
+    <div class="hotel-summary">
+      <div class="hotel-summary-image"><img src="https://media.omnibees.com/Images/4056/Property/5223337.png" alt="Hotel exterior"></div>
+      <div class="hotel-summary-info">
+        <div class="hotel-summary-name">Oceani Beach Park Resort</div>
+        <div class="hotel-summary-location">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Porto das Dunas, Aquiraz, Ceará
+        </div>
+        <div class="hotel-stars">
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+      </div>
+      <div>
+        <div class="rating-score">8.4</div>
+        <div class="rating-label">Muito bom</div>
+      </div>
+    </div>
+
+    <!-- ROOM CARDS GRID -->
+    <div class="rooms-grid" id="rooms-container"></div>
+
+    <!-- Trust Strip -->
+    <div class="trust-strip">
+      <div class="trust-item">
+        <div class="trust-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+        <div class="trust-text"><strong>Pagamento seguro</strong>Encriptação SSL 256-bit</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="trust-text"><strong>Melhor preço garantido</strong>Igualamos qualquer oferta</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <div class="trust-text"><strong>Confirmação instantânea</strong>Receba por e-mail em segundos</div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-text">© 2026 Niara OTA Builder. Todos os direitos reservados.</div>
+      <nav class="footer-links">
+        <a href="#" class="footer-link">Termos & Condições</a>
+        <a href="#" class="footer-link">Política de Privacidade</a>
+        <a href="#" class="footer-link">Contacto</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const NIGHTS = 8;
+    const USER_POINTS = 15000;
+    const POINTS_PER_REAL = 100;
+
+    const PAYMENT_METHODS = [
+      { id: 'card', label: 'Pagar com cartão', modifier: 1, icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>' },
+      { id: 'pix', label: 'Pagar com Pix', modifier: 0.98, discount: '-2%', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.17 17.83l-4-4a1 1 0 010-1.41l4-4"/><path d="M10.83 6.17l4 4a1 1 0 010 1.41l-4 4"/><rect x="2" y="2" width="20" height="20" rx="3"/></svg>' },
+      { id: 'transfer', label: 'Transferência bancária', modifier: 0.98, discount: '-2%', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M3 10h18"/><path d="M5 6l7-3 7 3"/><line x1="4" y1="10" x2="4" y2="21"/><line x1="8" y1="10" x2="8" y2="21"/><line x1="12" y1="10" x2="12" y2="21"/><line x1="16" y1="10" x2="16" y2="21"/><line x1="20" y1="10" x2="20" y2="21"/></svg>' },
+    ];
+
+    const rooms = [
+      {
+        id: 'room-1',
+        name: 'Apartamento Standard',
+        area: '18 m²', bed: 'Cama King', maxGuests: 'Max. 2 adultos', extra: '',
+        amenities: ['Wi-Fi', 'A/C', 'Minibar', 'Cofre', 'TV', 'Secador'],
+        badge: { type: 'popular', text: 'Mais popular' },
+        image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=420&h=280&fit=crop&q=80', photos: 5,
+        pricing: {
+          public:  { flexible: { roomOnly: 580, breakfast: 650, halfBoard: 780, allInclusive: 950 },
+                     nonRefundable: { roomOnly: 490, breakfast: 560, halfBoard: 680, allInclusive: 830 } },
+          member:  { flexible: { roomOnly: 522, breakfast: 585, halfBoard: 702, allInclusive: 855 },
+                     nonRefundable: { roomOnly: 441, breakfast: 504, halfBoard: 612, allInclusive: 747 } }
+        }
+      },
+      {
+        id: 'room-2',
+        name: 'Apartamento Gran Standard',
+        area: '18 m²', bed: 'Cama King', maxGuests: 'Max. 2 adultos', extra: '',
+        amenities: ['Wi-Fi', 'A/C', 'Minibar', 'Cofre', 'TV', 'Secador'],
+        badge: null,
+        image: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=420&h=280&fit=crop&q=80', photos: 4,
+        pricing: {
+          public:  { flexible: { roomOnly: 640, breakfast: 710, halfBoard: 840, allInclusive: 1020 },
+                     nonRefundable: { roomOnly: 540, breakfast: 610, halfBoard: 730, allInclusive: 890 } },
+          member:  { flexible: { roomOnly: 576, breakfast: 639, halfBoard: 756, allInclusive: 918 },
+                     nonRefundable: { roomOnly: 486, breakfast: 549, halfBoard: 657, allInclusive: 801 } }
+        }
+      },
+      {
+        id: 'room-3',
+        name: 'Apartamento Superior',
+        area: '19 m²', bed: 'Cama Casal', maxGuests: 'Max. 2+1 criança', extra: '',
+        amenities: ['Wi-Fi', 'A/C', 'Minibar', 'Cofre', 'TV', 'Secador'],
+        badge: { type: 'urgency', text: 'Últimos 2!' },
+        image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=420&h=280&fit=crop&q=80', photos: 6,
+        pricing: {
+          public:  { flexible: { roomOnly: 720, breakfast: 790, halfBoard: 920, allInclusive: 1110 },
+                     nonRefundable: { roomOnly: 610, breakfast: 680, halfBoard: 800, allInclusive: 970 } },
+          member:  { flexible: { roomOnly: 648, breakfast: 711, halfBoard: 828, allInclusive: 999 },
+                     nonRefundable: { roomOnly: 549, breakfast: 612, halfBoard: 720, allInclusive: 873 } }
+        }
+      },
+      {
+        id: 'room-4',
+        name: 'Suite Junior',
+        area: '25 m²', bed: 'King + Sofá-cama', maxGuests: 'Max. 2+2 crianças', extra: '',
+        amenities: ['Wi-Fi', 'A/C', 'Minibar', 'Cofre', 'TV', 'Secador', 'Sala'],
+        badge: null,
+        image: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=420&h=280&fit=crop&q=80', photos: 7,
+        pricing: {
+          public:  { flexible: { roomOnly: 890, breakfast: 980, halfBoard: 1140, allInclusive: 1380 },
+                     nonRefundable: { roomOnly: 760, breakfast: 850, halfBoard: 1000, allInclusive: 1220 } },
+          member:  { flexible: { roomOnly: 801, breakfast: 882, halfBoard: 1026, allInclusive: 1242 },
+                     nonRefundable: { roomOnly: 684, breakfast: 765, halfBoard: 900, allInclusive: 1098 } }
+        }
+      },
+      {
+        id: 'room-5',
+        name: 'Suite Conjugada',
+        area: '36 m²', bed: '1 Casal + 2 Singles', maxGuests: 'Max. 4 adultos', extra: '2 banheiros',
+        amenities: ['Wi-Fi', 'A/C', 'Minibar', 'Cofre', 'TV', 'Secador'],
+        badge: null,
+        image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=420&h=280&fit=crop&q=80', photos: 8,
+        pricing: {
+          public:  { flexible: { roomOnly: 1050, breakfast: 1180, halfBoard: 1380, allInclusive: 1650 },
+                     nonRefundable: { roomOnly: 890, breakfast: 1020, halfBoard: 1200, allInclusive: 1450 } },
+          member:  { flexible: { roomOnly: 945, breakfast: 1062, halfBoard: 1242, allInclusive: 1485 },
+                     nonRefundable: { roomOnly: 801, breakfast: 918, halfBoard: 1080, allInclusive: 1305 } }
+        }
+      },
+      {
+        id: 'room-6',
+        name: 'Suite Master Vista Mar',
+        area: '40 m²', bed: 'King + Sofá-cama', maxGuests: 'Max. 2+2 crianças', extra: 'Vista praia',
+        amenities: ['Wi-Fi', 'A/C', 'Minibar', 'Cofre', 'TV 55"', 'Roupão', 'Secador'],
+        badge: null, status: 'sold-out',
+        image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=420&h=280&fit=crop&q=80', photos: 9,
+        pricing: {
+          public:  { flexible: { roomOnly: 1280, breakfast: 1420, halfBoard: 1650, allInclusive: 1980 },
+                     nonRefundable: { roomOnly: 1090, breakfast: 1230, halfBoard: 1440, allInclusive: 1750 } },
+          member:  { flexible: { roomOnly: 1152, breakfast: 1278, halfBoard: 1485, allInclusive: 1782 },
+                     nonRefundable: { roomOnly: 981, breakfast: 1107, halfBoard: 1296, allInclusive: 1575 } }
+        }
+      },
+      {
+        id: 'room-7',
+        name: 'Standard Adaptado (PCD)',
+        area: '26 m²', bed: 'Cama Casal baixa', maxGuests: 'Max. 2 adultos', extra: 'Acessível',
+        amenities: ['Wi-Fi', 'A/C', 'Minibar', 'Cofre', 'TV', 'Barras apoio'],
+        badge: null, status: 'sold-out',
+        image: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=420&h=280&fit=crop&q=80', photos: 4,
+        pricing: {
+          public:  { flexible: { roomOnly: 580, breakfast: 650, halfBoard: 780, allInclusive: 950 },
+                     nonRefundable: { roomOnly: 490, breakfast: 560, halfBoard: 680, allInclusive: 830 } },
+          member:  { flexible: { roomOnly: 522, breakfast: 585, halfBoard: 702, allInclusive: 855 },
+                     nonRefundable: { roomOnly: 441, breakfast: 504, halfBoard: 612, allInclusive: 747 } }
+        }
+      }
+    ];
+
+    const roomState = {};
+    rooms.forEach(r => {
+      roomState[r.id] = { priceType: 'member', cancellation: 'nonRefundable', meal: 'roomOnly', payment: 'pix' };
+    });
+
+    const container = document.getElementById('rooms-container');
+
+    function getPrice(room, state) {
+      return room.pricing[state.priceType][state.cancellation][state.meal];
+    }
+    function getRefPrice(room) {
+      return room.pricing.public.flexible.breakfast;
+    }
+    function getCancelDetail(key) {
+      return key === 'flexible'
+        ? { text: 'Cancelamento grátis', cls: 'positive' }
+        : { text: 'Não reembolsável', cls: 'negative' };
+    }
+    function getPaymentDetail(key) {
+      return key === 'flexible'
+        ? { text: 'Pagar no hotel', cls: 'positive' }
+        : { text: 'Pagamento imediato', cls: 'warning' };
+    }
+    function checkSvg() {
+      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+    }
+    function xSvg() {
+      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>';
+    }
+    function warnSvg() {
+      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
+    }
+
+    function renderRooms() {
+      container.innerHTML = rooms.map(room => {
+        const state = roomState[room.id];
+        const isSoldOut = room.status === 'sold-out';
+        const hasRestriction = !!room.restriction;
+        const isDisabled = isSoldOut || hasRestriction;
+        const paymentMethod = PAYMENT_METHODS.find(p => p.id === state.payment);
+        const basePrice = getPrice(room, state);
+        const price = Math.round(basePrice * paymentMethod.modifier * 100) / 100;
+        const total = price * NIGHTS;
+        const refPrice = getRefPrice(room);
+        const refTotal = refPrice * NIGHTS;
+        const isMember = state.priceType === 'member';
+        const hasSaving = isMember && price < refPrice;
+        const saving = refTotal - total;
+        const memberDiscount = Math.round((1 - room.pricing.member.flexible.roomOnly / room.pricing.public.flexible.roomOnly) * 100);
+
+        // Info lines calculations
+        const pointsEarned = Math.round(total * 1.5);
+
+        // Price diffs for radio options
+        const cancelBasePrice = room.pricing[state.priceType]['nonRefundable'][state.meal];
+        const cancelFlexPrice = room.pricing[state.priceType]['flexible'][state.meal];
+        const cancelDiff = cancelFlexPrice - cancelBasePrice;
+
+        const mealBasePrice = room.pricing[state.priceType][state.cancellation]['roomOnly'];
+        const mealBreakfastPrice = room.pricing[state.priceType][state.cancellation]['breakfast'];
+        const mealBreakfastDiff = mealBreakfastPrice - mealBasePrice;
+
+        // Badges
+        let badgeHTML = '';
+        if (isSoldOut) {
+          badgeHTML = '<div class="room-badge sold-out-badge">Esgotado</div>';
+        } else if (hasRestriction) {
+          badgeHTML = `<div class="room-badge restriction-badge">${room.restriction}</div>`;
+        } else if (room.badge && room.badge.type === 'urgency') {
+          badgeHTML = `<div class="room-badge urgency"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${room.badge.text}</div>`;
+        } else if (room.badge) {
+          badgeHTML = `<div class="room-badge ${room.badge.type}">${room.badge.text}</div>`;
+        }
+
+        const cardClass = `room-card${isSoldOut ? ' sold-out' : ''}${hasRestriction ? ' restricted' : ''}`;
+
+
+        return `
+          <div class="${cardClass}" id="${room.id}">
+            <!-- IMAGE -->
+            <div class="room-gallery">
+              <img src="${room.image}" alt="${room.name}" loading="lazy">
+              ${badgeHTML}
+              <div class="room-gallery-counter">1 / ${room.photos}</div>
+              <button class="room-gallery-btn prev"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button>
+              <button class="room-gallery-btn next"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>
+            </div>
+
+            <!-- ROOM INFO -->
+            <div class="room-info">
+              <div class="room-type-name">${room.name}</div>
+              <div class="room-features">
+                <span class="room-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 12h20"/></svg>${room.area}</span>
+                <span class="room-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 012 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>${room.bed}</span>
+                <span class="room-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${room.maxGuests}</span>
+              </div>
+              <div class="room-amenities">
+                ${room.amenities.map(a => `<span class="room-amenity">${a}</span>`).join('')}
+              </div>
+              <a href="#" class="more-info-link" onclick="event.preventDefault()">Mais informações</a>
+            </div>
+
+            <!-- CONFIGURATOR -->
+            <div class="room-config">
+              <!-- Price Type Toggle -->
+              <div class="config-section">
+                <div class="price-toggle">
+                  <button class="price-toggle-btn ${state.priceType === 'public' ? 'active' : ''}"
+                    onclick="setPriceType('${room.id}', 'public')">Público</button>
+                  <button class="price-toggle-btn member-btn ${state.priceType === 'member' ? 'active' : ''}"
+                    onclick="setPriceType('${room.id}', 'member')">Membro <span class="toggle-discount">-${memberDiscount}%</span></button>
+                </div>
+              </div>
+
+              <!-- Cancellation (Radio) -->
+              <div class="config-section">
+                <div class="config-label">Cancelamento</div>
+                <div class="radio-group">
+                  <button class="radio-option ${state.cancellation === 'nonRefundable' ? 'active' : ''}"
+                    onclick="setCancellation('${room.id}', 'nonRefundable')">
+                    <span class="radio-option-left"><span class="radio-dot"><span class="radio-dot-inner"></span></span>Não reembolsável</span>
+                    <span class="radio-option-price">+ R$ 0</span>
+                  </button>
+                  <button class="radio-option ${state.cancellation === 'flexible' ? 'active' : ''}"
+                    onclick="setCancellation('${room.id}', 'flexible')">
+                    <span class="radio-option-left"><span class="radio-dot"><span class="radio-dot-inner"></span></span>Cancelamento grátis até 31/08/2026</span>
+                    <span class="radio-option-price">+ R$ ${cancelDiff.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Regime Alimentar (Radio) -->
+              <div class="config-section">
+                <div class="config-label">Regime Alimentar</div>
+                <div class="radio-group">
+                  <button class="radio-option ${state.meal === 'roomOnly' ? 'active' : ''}"
+                    onclick="setMeal('${room.id}', 'roomOnly')">
+                    <span class="radio-option-left"><span class="radio-dot"><span class="radio-dot-inner"></span></span>Só alojamento</span>
+                    <span class="radio-option-price">+ R$ 0</span>
+                  </button>
+                  <button class="radio-option ${state.meal === 'breakfast' ? 'active' : ''}"
+                    onclick="setMeal('${room.id}', 'breakfast')">
+                    <span class="radio-option-left"><span class="radio-dot"><span class="radio-dot-inner"></span></span>Café da manhã</span>
+                    <span class="radio-option-price">+ R$ ${mealBreakfastDiff.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- PRICE BAR -->
+            <div class="room-price-bar ${isMember ? 'member-active' : ''}">
+              <!-- Payment method selector -->
+              <div class="payment-method" onclick="togglePayment(event, '${room.id}')">
+                <span style="width:16px;height:16px;flex-shrink:0;display:inline-flex">${paymentMethod.icon}</span>
+                <span>${paymentMethod.label}</span>
+                ${paymentMethod.discount ? `<span class="payment-badge">${paymentMethod.discount}</span>` : ''}
+                <svg class="chevron-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                <div class="payment-dropdown">
+                  ${PAYMENT_METHODS.map(pm => `
+                    <div class="payment-option ${pm.id === state.payment ? 'active' : ''}" onclick="setPayment(event, '${room.id}', '${pm.id}')">
+                      <span style="width:18px;height:18px;flex-shrink:0">${pm.icon}</span>
+                      <span>${pm.label}</span>
+                      ${pm.discount ? `<span class="payment-discount">${pm.discount}</span>` : ''}
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <div class="discount-tags">
+                ${isMember ? `<span class="discount-tag tag-percent">-${memberDiscount}% Desconto</span>` : ''}
+                ${hasSaving ? `<span class="discount-tag tag-member">Poupa R$ ${saving.toLocaleString('pt-BR', {minimumFractionDigits: 2})} (Membro)</span>` : ''}
+              </div>
+
+              <div class="price-row">
+                <div>
+                  <div class="price-display">
+                    ${hasSaving ? `<span class="price-original">R$ ${refPrice.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>` : ''}
+                    <span class="price-current price-animate"><span class="price-currency">R$ </span>${price.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                    <span class="price-per-night">/ noite</span>
+                  </div>
+                  <div class="price-breakdown">Total de R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits: 2})} c/ impostos taxas · ${NIGHTS} noites</div>
+                  ${!isDisabled ? `<div class="info-line"><strong>Parcelamentos</strong> até 6x</div>` : ''}
+                  ${!isDisabled ? `<div class="info-line"><strong>Pontos</strong> ganhe até ${pointsEarned.toLocaleString('pt-BR')} Pontos</div>` : ''}
+                </div>
+              </div>
+              <div class="reserve-row">
+                <button class="btn-reserve">Reservar</button>
+                <button class="btn-cart" title="Adicionar ao carrinho">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/><line x1="12" y1="9" x2="12" y2="15"/><line x1="9" y1="12" x2="15" y2="12"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function setPriceType(roomId, value) { Object.keys(roomState).forEach(id => roomState[id].priceType = value); renderRooms(); }
+    function setCancellation(roomId, value) { roomState[roomId].cancellation = value; renderRooms(); }
+    function setMeal(roomId, value) { roomState[roomId].meal = value; renderRooms(); }
+    function togglePayment(e, roomId) {
+      e.currentTarget.classList.toggle('open');
+    }
+    function setPayment(e, roomId, value) {
+      e.stopPropagation();
+      roomState[roomId].payment = value;
+      renderRooms();
+    }
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.payment-method')) {
+        document.querySelectorAll('.payment-method.open').forEach(el => el.classList.remove('open'));
+      }
+    });
+
+    renderRooms();
+
+    // Header scroll behavior
+    const siteHeader = document.getElementById('siteHeader');
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (scrollY > 60) {
+        siteHeader.classList.add('scrolled');
+      } else {
+        siteHeader.classList.remove('scrolled');
+      }
+      lastScroll = scrollY;
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
