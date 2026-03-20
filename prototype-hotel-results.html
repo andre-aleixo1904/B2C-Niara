@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultados de Hotéis — Hotel Results</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Nunito:wght@900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #1A1D3B;
+      --color-primary-light: #3A3F6E;
+      --color-primary-dark: #0E1028;
+      --color-accent: #4A3AFF;
+      --color-accent-hover: #3B2ECC;
+      --color-accent-light: #EEEAFF;
+      --color-warning: #E8A317;
+      --color-warning-light: #FFF8E7;
+      --color-danger: #C0392B;
+      --color-danger-light: #FDEDEB;
+      --color-surface: #FFFFFF;
+      --color-surface-alt: #F7F8FA;
+      --color-surface-hover: #F0F2F5;
+      --color-border: #E2E5EA;
+      --color-border-light: #EEF0F3;
+      --color-text-primary: #1A1D23;
+      --color-text-secondary: #5A6170;
+      --color-text-tertiary: #8B9099;
+      --color-text-inverse: #FFFFFF;
+      --color-member: #4A3AFF;
+      --color-member-light: #EEEAFF;
+      --color-member-bg: #E0DBFF;
+
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-size-xs: 0.6875rem;
+      --font-size-sm: 0.75rem;
+      --font-size-base: 0.875rem;
+      --font-size-md: 1rem;
+      --font-size-lg: 1.125rem;
+      --font-size-xl: 1.25rem;
+      --font-size-2xl: 1.5rem;
+
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 30px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.04);
+      --shadow-focus: 0 0 0 3px rgba(74, 58, 255, 0.25);
+
+      --transition-fast: 150ms ease;
+      --transition-base: 250ms ease;
+    }
+
+    .mi { font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; line-height: 1; letter-spacing: normal; text-transform: none; display: inline-block; white-space: nowrap; direction: ltr; -webkit-font-smoothing: antialiased; vertical-align: middle; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-family);
+      font-size: var(--font-size-base);
+      color: var(--color-text-primary);
+      background: #FFFFFF;
+      line-height: 1.5;
+    }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ===== HEADER (sticky, animated) ===== */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      transition: box-shadow 0.3s ease;
+    }
+    .header.scrolled {
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .header-main {
+      width: 100%;
+      padding: 16px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      position: relative;
+      background: #fff;
+    }
+    .header-main::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -30px;
+      height: 30px;
+      background: #fff;
+      border-bottom: 1px solid #E6E6E6;
+      pointer-events: none;
+    }
+    .header.scrolled .header-main::after {
+      display: none;
+    }
+
+    /* Logo */
+    .logo {
+      text-decoration: none;
+      display: flex;
+      align-items: baseline;
+      flex-shrink: 0;
+      gap: 0;
+      line-height: 1;
+    }
+    .logo-ux {
+      font-family: 'Nunito', sans-serif;
+      font-size: 32px;
+      font-weight: 900;
+      color: #1A1D3B;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+    .logo-dots {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-left: 1px;
+      align-self: flex-start;
+      margin-top: 2px;
+    }
+    .logo-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #4539F9;
+      display: block;
+    }
+    .logo-hoteis {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: #1A1D3B;
+      letter-spacing: 2px;
+      margin-left: 5px;
+      line-height: 1;
+    }
+
+    /* Header tabs */
+    .header-tabs {
+      display: flex;
+      gap: 8px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+      max-height: 50px;
+      opacity: 1;
+      overflow: hidden;
+    }
+    .header.scrolled .header-tabs {
+      max-height: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .header-tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 100px;
+      border: 1px solid var(--color-border);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      background: #fff;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .header-tab-btn:hover { border-color: var(--color-text-tertiary); }
+    .header-tab-btn.active {
+      background: #273240;
+      color: #fff;
+      border-color: #273240;
+    }
+    .header-tab-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    /* Compact search (fades in on scroll) */
+    .header-search-inline {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .header.scrolled .header-search-inline {
+      max-height: 60px;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Header actions */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-shrink: 0;
+    }
+    .header-login-text {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .header-login-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #F0F0F0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background var(--transition-fast);
+    }
+    .header-login-icon:hover { background: #E0E0E0; }
+    .header.scrolled .header-login-text { display: none; }
+    .header.scrolled .header-login-icon { display: flex; }
+    .header-icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #F0F0F0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      border: none;
+      transition: background var(--transition-fast);
+    }
+    .header-icon-btn:hover { background: #E0E0E0; }
+    .header-icon-btn svg { width: 16px; height: 16px; }
+    .header-icon-btn.flag-icon { background: #F0F0F0; overflow: hidden; }
+
+    /* ===== SEARCH BAR (Pill) ===== */
+    .search-pill {
+      max-width: 900px;
+      width: 100%;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 100px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 8px 10px 8px 24px;
+      transition: height 0.3s ease, padding 0.3s ease;
+    }
+    .header-search-inline .search-pill {
+      height: 46px;
+      padding: 5px 6px 5px 18px;
+      max-width: 980px;
+    }
+    .search-pill-field {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex: 1;
+      min-width: 0;
+      cursor: pointer;
+      padding: 0 var(--space-3);
+    }
+    .search-pill-texts {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .search-pill-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #273240;
+      line-height: 18px;
+      transition: max-height 0.3s ease, opacity 0.2s ease;
+      max-height: 20px;
+      opacity: 1;
+      overflow: hidden;
+    }
+    .header-search-inline .search-pill-label {
+      max-height: 0;
+      opacity: 0;
+    }
+    .search-pill-value {
+      font-size: 13px;
+      font-weight: 400;
+      color: #273240;
+      line-height: 18px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: font-weight 0.2s ease, color 0.2s ease;
+    }
+    .header-search-inline .search-pill-value {
+      font-weight: 500;
+      color: #273240;
+    }
+    .header-search-inline .search-pill-field svg {
+      width: 18px;
+      height: 18px;
+    }
+    .search-pill-divider {
+      width: 1px;
+      height: 30px;
+      background: #e0e0e0;
+      flex-shrink: 0;
+      transition: height 0.3s ease;
+    }
+    .header-search-inline .search-pill-divider { height: 24px; }
+    .search-pill-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: background var(--transition-fast), width 0.3s ease, height 0.3s ease;
+      margin-left: var(--space-3);
+    }
+    .header-search-inline .search-pill-btn {
+      width: 36px;
+      height: 36px;
+    }
+    .header-search-inline .search-pill-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+    .search-pill-btn:hover { background: var(--color-accent-hover); }
+    .search-pill-btn { color: #fff; }
+
+    /* ===== SEARCH ROW (floating, below main header) ===== */
+    .header-search-row {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 24px 0;
+      display: flex;
+      justify-content: center;
+      max-height: 100px;
+      opacity: 1;
+      overflow: visible;
+      transition: max-height 0.3s ease, opacity 0.25s ease, padding 0.3s ease, margin 0.3s ease;
+      margin-bottom: -30px;
+      position: relative;
+      z-index: 10;
+    }
+    .header.scrolled .header-search-row {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      margin-bottom: 0;
+    }
+    .header-search-row .search-pill {
+      max-width: 1235px;
+      width: 100%;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      border-radius: 100px;
+      border: 1px solid #e0e0e0;
+      background: #fff;
+    }
+
+    /* ===== PROMO BAR ===== */
+    .promo-bar {
+      background: #4539F9;
+      width: 100%;
+      z-index: 100;
+      position: relative;
+    }
+    .promo-bar-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .promo-bar-text {
+      font-size: 14px;
+      font-weight: 400;
+      color: #fff;
+    }
+    .promo-bar-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .promo-bar-link:hover { opacity: 0.85; }
+    .promo-bar-close {
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .promo-bar-close:hover { opacity: 0.7; }
+
+    /* ===== MAIN ===== */
+    .main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-6);
+    }
+
+    /* ===== LOYALTY BANNER ===== */
+    .loyalty-banner {
+      background: #F5F5FF;
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: var(--space-6);
+      margin-top: 20px;
+    }
+    .loyalty-banner-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .loyalty-banner-icon svg { width: 36px; height: 36px; }
+    .loyalty-banner-content { flex: 1; }
+    .loyalty-banner-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: 2px;
+    }
+    .loyalty-banner-subtitle {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+    }
+    .loyalty-banner-link {
+      color: #4539F9;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .loyalty-banner-link:hover { text-decoration: underline; }
+
+    /* ===== SECTION HEADER ===== */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-6);
+    }
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+    .section-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-map {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 100px;
+      border: 1px solid #C5C5C5;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      background: #fff;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .btn-map:hover { border-color: var(--color-text-tertiary); background: #F5F5F5; }
+    .btn-sort {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 12px 16px;
+      border-radius: 100px;
+      border: 1px solid #C5C5C5;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      background: #fff;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .btn-sort:hover { border-color: var(--color-text-tertiary); background: #F5F5F5; }
+    .btn-sort .sort-value { font-weight: 700; }
+
+    /* ===== HOTELS GRID ===== */
+    .hotels-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+    }
+
+    /* ===== HOTEL CARD ===== */
+    .hotel-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid #C5C5C5;
+      overflow: hidden;
+      transition: box-shadow var(--transition-base);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .hotel-card:hover { box-shadow: var(--shadow-md); }
+    .hotel-card.sold-out { opacity: 0.65; pointer-events: none; }
+    .hotel-card.sold-out .hotel-card-cta { background: #BDBDBD; cursor: default; }
+
+    /* Gallery */
+    .hotel-card-gallery {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      background: var(--color-surface-alt);
+      flex-shrink: 0;
+    }
+    .hotel-card-gallery img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .hotel-card:hover .hotel-card-gallery img {
+      transform: scale(1.03);
+    }
+
+    /* Gallery nav buttons */
+    .hotel-card-gallery-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px; height: 28px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+      cursor: pointer;
+      border: none;
+    }
+    .hotel-card:hover .hotel-card-gallery-btn { opacity: 1; }
+    .hotel-card-gallery-btn.prev { left: 8px; }
+    .hotel-card-gallery-btn.next { right: 8px; }
+    .hotel-card-gallery-btn svg { width: 12px; height: 12px; }
+
+    /* Badge on image */
+    .hotel-card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 12px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      z-index: 2;
+    }
+    .hotel-card-badge.sold-out-badge { background: #FF5D5D; }
+    .hotel-card-badge.restriction-badge { background: #FF9800; }
+
+    /* Info section */
+    .hotel-card-info {
+      padding: 16px 16px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    /* Stars */
+    .hotel-card-stars {
+      display: flex;
+      gap: 1px;
+      margin-bottom: 2px;
+    }
+    .hotel-card-stars .star-icon {
+      width: 16px;
+      height: 16px;
+      color: #FFB200;
+    }
+
+    /* Hotel name */
+    .hotel-card-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      line-height: 1.3;
+    }
+
+    /* Location */
+    .hotel-card-location {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+    }
+    .hotel-card-location .mi { font-size: 14px; color: var(--color-text-tertiary); }
+
+    /* Amenities */
+    .hotel-card-amenities {
+      display: flex;
+      gap: 8px;
+      padding: 8px 16px;
+      flex-wrap: wrap;
+    }
+    .hotel-card-amenity {
+      color: var(--color-text-tertiary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hotel-card-amenity .mi { font-size: 20px; }
+
+    /* Separator */
+    .hotel-card-separator {
+      height: 1px;
+      background: #E6E6E6;
+      margin: 0 16px;
+    }
+
+    /* Price section */
+    .hotel-card-price {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+    .hotel-card-member-tag {
+      display: inline-flex;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-member);
+      background: rgba(69, 57, 249, 0.08);
+      padding: 2px 8px;
+      border-radius: 4px;
+      width: fit-content;
+      margin-bottom: 4px;
+    }
+    .hotel-card-price-label {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+    }
+    .hotel-card-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .hotel-card-price-old {
+      font-size: 14px;
+      color: var(--color-text-tertiary);
+      text-decoration: line-through;
+    }
+    .hotel-card-price-current {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      line-height: 1.2;
+    }
+    .hotel-card-price-night {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      align-self: flex-end;
+      margin-bottom: 2px;
+    }
+    .hotel-card-price-total {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+    }
+
+    /* CTA */
+    .hotel-card-cta {
+      margin: 0 16px 16px;
+      padding: 14px;
+      border-radius: 100px;
+      background: #4539F9;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: background var(--transition-fast);
+      border: none;
+      width: calc(100% - 32px);
+    }
+    .hotel-card-cta:hover { background: #3B2ECC; }
+    .hotel-card.sold-out .hotel-card-cta {
+      background: #BDBDBD;
+      cursor: default;
+    }
+    .hotel-card.sold-out .hotel-card-cta:hover {
+      background: #BDBDBD;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: #273240;
+      color: #FFFFFF;
+      padding: 41px 40px;
+      margin-top: var(--space-8);
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .footer-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 18px;
+      color: #FFFFFF;
+    }
+    .footer-links { display: flex; align-items: center; gap: 0; }
+    .footer-link {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 18px;
+      color: #FFFFFF;
+      text-decoration: none;
+    }
+    .footer-link:hover { opacity: 0.8; }
+    .footer-separator {
+      font-size: 13px;
+      color: #FFFFFF;
+      margin: 0 8px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1100px) {
+      .hotels-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .hotels-grid { grid-template-columns: 1fr; }
+      .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .header-tabs { display: none; }
+      .header-main { padding: 12px 16px; }
+      .main { padding: var(--space-4) var(--space-4); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PROMO BAR -->
+  <div class="promo-bar" id="promoBar">
+    <div class="promo-bar-inner">
+      <span class="promo-bar-text">Inicie sessão para aplicar seu benefício de membro nesta reserva.</span>
+      <a href="#" class="promo-bar-link" onclick="event.preventDefault()">Iniciar sessão</a>
+    </div>
+    <button class="promo-bar-close" id="promoBarClose" aria-label="Fechar">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 12.5L12.5 3.5" stroke="#fff" stroke-miterlimit="16" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 3.5L12.5 12.5" stroke="#fff" stroke-miterlimit="16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header" id="siteHeader">
+    <div class="header-main">
+      <a href="#" class="logo">
+        <span class="logo-ux">UX</span><span class="logo-dots"><span class="logo-dot"></span><span class="logo-dot"></span></span><span class="logo-hoteis">HOTÉIS</span>
+      </a>
+
+      <!-- Header Tabs -->
+      <div class="header-tabs">
+        <button class="header-tab-btn active">
+          <span class="mi" style="font-size:18px">hotel</span>
+          Alojamento
+        </button>
+        <button class="header-tab-btn">
+          <span class="mi" style="font-size:18px">confirmation_number</span>
+          Experiências
+        </button>
+      </div>
+
+      <!-- Compact search (fades in on scroll) -->
+      <div class="header-search-inline">
+        <div class="search-pill">
+          <div class="search-pill-field">
+            <span class="mi" style="font-size:20px">location_on</span>
+            <div class="search-pill-texts">
+              <div class="search-pill-label">Onde quer ir?</div>
+              <div class="search-pill-value">UX-UI Premium Design</div>
+            </div>
+          </div>
+          <div class="search-pill-divider"></div>
+          <div class="search-pill-field">
+            <span class="mi" style="font-size:20px">calendar_today</span>
+            <div class="search-pill-texts">
+              <div class="search-pill-label">Quando quer ir?</div>
+              <div class="search-pill-value">Seg 21 Mar — Sex 25 Mar</div>
+            </div>
+          </div>
+          <div class="search-pill-divider"></div>
+          <div class="search-pill-field">
+            <span class="mi" style="font-size:20px">person</span>
+            <div class="search-pill-texts">
+              <div class="search-pill-label">Quem vai?</div>
+              <div class="search-pill-value">2 Hóspedes · 1 Quarto</div>
+            </div>
+          </div>
+          <div class="search-pill-divider"></div>
+          <div class="search-pill-field">
+            <span class="mi" style="font-size:20px">local_offer</span>
+            <div class="search-pill-texts">
+              <div class="search-pill-label">Tem um desconto?</div>
+              <div class="search-pill-value">VERAO26</div>
+            </div>
+          </div>
+          <button class="search-pill-btn">
+            <span class="mi" style="font-size:18px;color:#fff">search</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="header-actions">
+        <a href="#" class="header-login-text">Login</a>
+        <div class="header-login-icon" title="Login">
+          <span class="mi" style="font-size:16px;color:#273240">person</span>
+        </div>
+        <div class="header-icon-btn flag-icon" title="Brasil">
+          <svg width="16" height="16" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#009739"/><polygon points="20,7 35,20 20,33 5,20" fill="#FFDF00"/><circle cx="20" cy="20" r="7" fill="#002776"/><path d="M13.5,20.5 Q20,17 26.5,20.5" fill="none" stroke="#fff" stroke-width="0.8"/></svg>
+        </div>
+        <button class="header-icon-btn" title="Carrinho">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 18C11.1046 18 12 18.8954 12 20C12 21.1046 11.1046 22 10 22C8.89543 22 8 21.1046 8 20C8 18.8954 8.89543 18 10 18ZM18 18C19.1046 18 20 18.8954 20 20C20 21.1046 19.1046 22 18 22C16.8954 22 16 21.1046 16 20C16 18.8954 16.8954 18 18 18ZM18 19C17.4477 19 17 19.4477 17 20C17 20.5523 17.4477 21 18 21C18.5523 21 19 20.5523 19 20C19 19.4477 18.5523 19 18 19ZM10 19C9.44772 19 9 19.4477 9 20C9 20.5523 9.44772 21 10 21C10.5523 21 11 20.5523 11 20C11 19.4477 10.5523 19 10 19ZM5.39844 2C6.07791 2.00002 6.67248 2.45679 6.84766 3.11328L7.88477 7H19.4746C20.4292 7.00009 21.1409 7.88001 20.9414 8.81348L19.6582 14.8135C19.5102 15.5053 18.8989 15.9999 18.1914 16H10.1299C9.43063 15.9999 8.82417 15.5166 8.66797 14.835L7.0166 7.62891L5.88184 3.37109C5.82347 3.15223 5.62494 3.00002 5.39844 3H3.5C3.22386 3 3 2.77614 3 2.5C3 2.22386 3.22386 2 3.5 2H5.39844ZM9.64258 14.6113C9.69463 14.8385 9.89686 14.9999 10.1299 15H18.1914C18.4272 14.9999 18.6314 14.8351 18.6807 14.6045L19.9639 8.60449C20.0303 8.2934 19.7927 8.00009 19.4746 8H8.12695L9.64258 14.6113Z" fill="#273240"/></svg>
+        </button>
+        <button class="header-icon-btn" title="Menu">
+          <span class="mi" style="font-size:16px;color:#273240">menu</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Search row (full, below main row) -->
+    <div class="header-search-row" id="floatingSearch">
+      <div class="search-pill">
+        <div class="search-pill-field">
+          <span class="mi" style="font-size:20px">location_on</span>
+          <div class="search-pill-texts">
+            <div class="search-pill-label">Onde quer ir?</div>
+            <div class="search-pill-value">UX-UI Premium Design</div>
+          </div>
+        </div>
+        <div class="search-pill-divider"></div>
+        <div class="search-pill-field">
+          <span class="mi" style="font-size:20px">calendar_today</span>
+          <div class="search-pill-texts">
+            <div class="search-pill-label">Quando quer ir?</div>
+            <div class="search-pill-value">Seg 21 Mar — Sex 25 Mar</div>
+          </div>
+        </div>
+        <div class="search-pill-divider"></div>
+        <div class="search-pill-field">
+          <span class="mi" style="font-size:20px">person</span>
+          <div class="search-pill-texts">
+            <div class="search-pill-label">Quem vai?</div>
+            <div class="search-pill-value">2 Hóspedes · 1 Quarto</div>
+          </div>
+        </div>
+        <div class="search-pill-divider"></div>
+        <div class="search-pill-field">
+          <span class="mi" style="font-size:20px">local_offer</span>
+          <div class="search-pill-texts">
+            <div class="search-pill-label">Tem um desconto?</div>
+            <div class="search-pill-value">VERAO26</div>
+          </div>
+        </div>
+        <button class="search-pill-btn">
+          <span class="mi" style="font-size:20px;color:#fff">search</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- Loyalty Banner -->
+    <div class="loyalty-banner">
+      <div class="loyalty-banner-icon">
+        <span class="mi" style="font-size:36px;color:#4539F9">loyalty</span>
+      </div>
+      <div class="loyalty-banner-content">
+        <div class="loyalty-banner-title">Reserve com 10% de desconto exclusivo</div>
+        <div class="loyalty-banner-subtitle">Inicie sessão para aplicar seu benefício de membro nesta reserva. <a href="#" class="loyalty-banner-link" onclick="event.preventDefault()">Iniciar sessão</a></div>
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+      <div class="section-title">Escolha sua hospedagem</div>
+      <div class="section-controls">
+        <button class="btn-map">
+          <span class="mi" style="font-size:16px">map</span>
+          Ver no Mapa
+        </button>
+        <button class="btn-sort">
+          Ordenar por <span class="sort-value">mais barato primeiro</span>
+          <span class="mi" style="font-size:16px">expand_more</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Hotels Grid -->
+    <div class="hotels-grid" id="hotelsGrid">
+      <!-- Populated by JS -->
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-text">© 2026 UX Hotéis. Todos os direitos reservados.</div>
+      <nav class="footer-links">
+        <a href="#" class="footer-link">Termos & Condições</a>
+        <span class="footer-separator">·</span>
+        <a href="#" class="footer-link">Política de Privacidade</a>
+        <span class="footer-separator">·</span>
+        <a href="#" class="footer-link">Contacto</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // ===== HOTEL DATA =====
+    const HOTELS = [
+      {
+        id: 1,
+        name: 'UX São Paulo Av. Paulista',
+        location: 'São Paulo, Brasil',
+        stars: 5,
+        image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&h=400&fit=crop&q=80',
+        amenities: ['ac_unit', 'local_bar', 'accessible', 'spa', 'pets', 'pool', 'wifi'],
+        hasMemberDiscount: true,
+        priceOld: 145.00,
+        priceCurrent: 130.50,
+        priceTotal: 522.00,
+        cta: 'Ver detalhe',
+        ctaType: 'detail'
+      },
+      {
+        id: 2,
+        name: 'UX Design Rio de Janeiro',
+        location: 'São Paulo, Brasil',
+        stars: 3,
+        image: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&h=400&fit=crop&q=80',
+        amenities: ['ac_unit', 'local_bar', 'accessible', 'spa', 'pets', 'pool', 'wifi'],
+        hasMemberDiscount: true,
+        priceOld: 340.00,
+        priceCurrent: 306.00,
+        priceTotal: 1224.00,
+        cta: 'Ver detalhe',
+        ctaType: 'detail'
+      },
+      {
+        id: 3,
+        name: 'UX- UI Premium Design',
+        location: 'São Paulo, Brasil',
+        stars: 5,
+        image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop&q=80',
+        amenities: ['ac_unit', 'local_bar', 'accessible', 'spa', 'pets', 'pool', 'wifi'],
+        hasMemberDiscount: false,
+        priceOld: null,
+        priceCurrent: 360.00,
+        priceTotal: 1440.00,
+        cta: 'Ver detalhe',
+        ctaType: 'detail'
+      },
+      {
+        id: 4,
+        name: 'UX Donald',
+        location: 'São Paulo, Brasil',
+        stars: 3,
+        image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&h=400&fit=crop&q=80',
+        amenities: ['ac_unit', 'local_bar', 'accessible', 'spa', 'pets', 'pool', 'wifi'],
+        hasMemberDiscount: false,
+        priceOld: null,
+        priceCurrent: 380.00,
+        priceTotal: 1520.00,
+        cta: 'Ver quartos',
+        ctaType: 'rooms'
+      },
+      {
+        id: 5,
+        name: 'UX Vista Cabo',
+        location: 'São Paulo, Brasil',
+        stars: 4,
+        image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&h=400&fit=crop&q=80',
+        amenities: ['ac_unit', 'local_bar', 'accessible', 'spa', 'pets', 'pool', 'wifi'],
+        hasMemberDiscount: false,
+        priceOld: null,
+        priceCurrent: 400.00,
+        priceTotal: 1600.00,
+        cta: 'Ver quartos',
+        ctaType: 'rooms'
+      },
+      {
+        id: 6,
+        name: 'UX El Mariachi',
+        location: 'São Paulo, Brasil',
+        stars: 5,
+        image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&h=400&fit=crop&q=80',
+        amenities: ['ac_unit', 'local_bar', 'accessible', 'spa', 'pets', 'pool', 'wifi'],
+        hasMemberDiscount: true,
+        priceOld: 419.00,
+        priceCurrent: 377.10,
+        priceTotal: 1508.40,
+        cta: 'Ver quartos',
+        ctaType: 'rooms'
+      },
+      {
+        id: 7,
+        name: 'UX Riviera Maya',
+        location: 'São Paulo, Brasil',
+        stars: 5,
+        image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&h=400&fit=crop&q=80',
+        amenities: ['ac_unit', 'local_bar', 'accessible', 'spa', 'pets', 'pool', 'wifi'],
+        hasMemberDiscount: true,
+        priceOld: 495.00,
+        priceCurrent: 445.50,
+        priceTotal: 1782.00,
+        cta: 'Ver quartos',
+        ctaType: 'rooms'
+      },
+      {
+        id: 8,
+        name: 'UX Johanesburo',
+        location: 'São Paulo, Brasil',
+        stars: 5,
+        image: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&h=400&fit=crop&q=80',
+        amenities: ['ac_unit', 'local_bar', 'accessible', 'spa', 'pets', 'pool', 'wifi'],
+        hasMemberDiscount: true,
+        priceOld: 565.00,
+        priceCurrent: 508.50,
+        priceTotal: 2034.00,
+        cta: 'Ver quartos',
+        ctaType: 'rooms',
+        badge: { type: 'sold-out', text: 'Esgotado' },
+        soldOut: true
+      },
+      {
+        id: 9,
+        name: 'UX Hong Kong',
+        location: 'São Paulo, Brasil',
+        stars: 5,
+        image: 'https://images.unsplash.com/photo-1455587734955-081b22074882?w=600&h=400&fit=crop&q=80',
+        amenities: ['ac_unit', 'local_bar', 'accessible', 'spa', 'pets', 'pool', 'wifi'],
+        hasMemberDiscount: true,
+        priceOld: null,
+        priceCurrent: 245.00,
+        priceTotal: 980.00,
+        cta: 'Ver quartos',
+        ctaType: 'rooms',
+        badge: { type: 'restriction', text: 'Mínimo 5 noites' }
+      }
+    ];
+
+    // ===== STAR SVG =====
+    const STAR_SVG = '<svg class="star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.47 5.01 5.53.8-4 3.9.94 5.49L10 14.26 5.06 16.7l.94-5.49-4-3.9 5.53-.8L10 1.5z"/></svg>';
+
+    // ===== FORMAT PRICE =====
+    function formatPrice(value) {
+      return 'R$ ' + value.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+
+    // ===== RENDER HOTELS =====
+    function renderHotels() {
+      const grid = document.getElementById('hotelsGrid');
+      grid.innerHTML = '';
+
+      HOTELS.forEach(hotel => {
+        const card = document.createElement('div');
+        card.className = 'hotel-card' + (hotel.soldOut ? ' sold-out' : '');
+        card.onclick = () => {
+          if (!hotel.soldOut) {
+            window.location.href = 'prototype-resultados-v2.html';
+          }
+        };
+
+        // Stars HTML
+        const starsHtml = Array(hotel.stars).fill(STAR_SVG).join('');
+
+        // Badge HTML
+        let badgeHtml = '';
+        if (hotel.badge) {
+          const badgeClass = hotel.badge.type === 'sold-out' ? 'sold-out-badge' : 'restriction-badge';
+          const badgeIcon = hotel.badge.type === 'sold-out'
+            ? '<span class="mi" style="font-size:14px">block</span>'
+            : '<span class="mi" style="font-size:14px">warning</span>';
+          badgeHtml = `<div class="hotel-card-badge ${badgeClass}">${badgeIcon} ${hotel.badge.text}</div>`;
+        }
+
+        // Member discount tag
+        let memberTagHtml = '';
+        if (hotel.hasMemberDiscount) {
+          memberTagHtml = '<div class="hotel-card-member-tag">Benefícios para membros</div>';
+        }
+
+        // Price display
+        let priceOldHtml = '';
+        if (hotel.priceOld) {
+          priceOldHtml = `<span class="hotel-card-price-old">${formatPrice(hotel.priceOld)}</span>`;
+        }
+
+        // Amenities
+        const amenitiesHtml = hotel.amenities.map(a =>
+          `<span class="hotel-card-amenity"><span class="mi">${a}</span></span>`
+        ).join('');
+
+        card.innerHTML = `
+          <div class="hotel-card-gallery">
+            <img src="${hotel.image}" alt="${hotel.name}">
+            ${badgeHtml}
+            <button class="hotel-card-gallery-btn prev" onclick="event.stopPropagation()">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M7.5 2L3.5 6L7.5 10" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="hotel-card-gallery-btn next" onclick="event.stopPropagation()">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M4.5 2L8.5 6L4.5 10" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <div class="hotel-card-info">
+            <div class="hotel-card-stars">${starsHtml}</div>
+            <div class="hotel-card-name">${hotel.name}</div>
+            <div class="hotel-card-location">
+              <span class="mi">location_on</span>
+              ${hotel.location}
+            </div>
+          </div>
+          <div class="hotel-card-amenities">${amenitiesHtml}</div>
+          <div class="hotel-card-separator"></div>
+          <div class="hotel-card-price">
+            ${memberTagHtml}
+            <div class="hotel-card-price-label">A partir de</div>
+            <div class="hotel-card-price-row">
+              ${priceOldHtml}
+              <span class="hotel-card-price-current">${formatPrice(hotel.priceCurrent)}</span>
+              <span class="hotel-card-price-night">/ noite</span>
+            </div>
+            <div class="hotel-card-price-total">Total de ${formatPrice(hotel.priceTotal)} c/ impostos taxas · 4 noites</div>
+          </div>
+          <button class="hotel-card-cta" onclick="event.stopPropagation(); ${hotel.soldOut ? '' : "window.location.href='prototype-resultados-v2.html'"}">${hotel.cta}</button>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    // ===== HEADER SCROLL =====
+    const header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // ===== PROMO BAR CLOSE =====
+    document.getElementById('promoBarClose').addEventListener('click', () => {
+      document.getElementById('promoBar').style.display = 'none';
+    });
+
+    // ===== INIT =====
+    renderHotels();
+  </script>
+</body>
+</html>
