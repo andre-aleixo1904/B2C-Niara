@@ -71,7 +71,7 @@
       font-family: var(--font-family);
       font-size: var(--font-size-base);
       color: var(--color-text-primary);
-      background: var(--color-surface-alt);
+      background: #FFFFFF;
       line-height: 1.5;
     }
     button { font-family: inherit; cursor: pointer; border: none; background: none; }
@@ -418,7 +418,7 @@
     .room-card {
       background: var(--color-surface);
       border-radius: var(--radius-lg);
-      border: 1px solid var(--color-border-light);
+      border: 1px solid #C5C5C5;
       overflow: hidden;
       transition: box-shadow var(--transition-base);
       display: flex;
@@ -870,6 +870,139 @@
       box-shadow: var(--shadow-md);
     }
     .btn-reserve:active { transform: translateY(0); }
+    /* Selected card state (scenario 2/3) */
+    .room-card.selected {
+      border: 3px solid var(--color-accent);
+    }
+    .btn-reserve.selected {
+      background: #2E7D32;
+      color: #fff;
+    }
+    .btn-reserve.selected:hover {
+      background: #1B5E20;
+    }
+
+    /* Quantity selector (replaces Reservar when selected) */
+    .qty-selector {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+      height: 48px;
+      padding: 8px;
+      border-radius: 100px;
+      background: rgba(69, 57, 249, 0.08);
+      border: 1px solid #4539F9;
+      gap: 8px;
+    }
+    .qty-selector .qty-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #4539F9;
+      font-size: 18px;
+      transition: background 0.15s ease;
+      flex-shrink: 0;
+      padding: 0;
+    }
+    .qty-selector .qty-btn:hover {
+      background: rgba(69, 57, 249, 0.1);
+    }
+    .qty-selector .qty-btn.trash svg { width: 18px; height: 18px; }
+    .qty-selector.remove-mode {
+      justify-content: center;
+    }
+    .qty-selector.remove-mode .qty-btn {
+      width: auto;
+      height: auto;
+    }
+    .qty-selector .qty-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: #4539F9;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    /* ===== ROOM TOGGLE (scenario 3) ===== */
+    .room-toggle-bar {
+      display: none;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .room-toggle-bar.visible { display: flex; }
+    .room-toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 48px;
+      padding: 0 15px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid #C5C5C5;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .room-toggle-btn .toggle-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: #273240;
+    }
+    .room-toggle-btn .toggle-sep {
+      width: 0;
+      height: 20px;
+      border-left: 1px solid #C5C5C5;
+    }
+    .room-toggle-btn .toggle-criteria {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      font-weight: 400;
+      color: #616161;
+    }
+    .room-toggle-btn .toggle-criteria svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+    .room-toggle-btn.active {
+      background: #4539F9;
+      border-color: #4539F9;
+    }
+    .room-toggle-btn.active .toggle-label {
+      color: #fff;
+    }
+    .room-toggle-btn.active .toggle-sep {
+      border-color: rgba(255,255,255,0.3);
+    }
+    .room-toggle-btn.active .toggle-criteria {
+      color: #fff;
+    }
+    .room-toggle-btn.active .toggle-criteria svg path {
+      fill: #fff;
+    }
+    .room-toggle-btn.completed {
+      background: rgba(69, 57, 249, 0.08);
+      border-color: #4539F9;
+    }
+    .room-toggle-btn.completed .toggle-label {
+      color: #4539F9;
+    }
+    .room-toggle-btn.completed .toggle-criteria {
+      color: #4539F9;
+    }
+    .room-toggle-btn.completed .toggle-criteria svg path {
+      fill: #4539F9;
+    }
 
     /* ===== TRUST STRIP ===== */
     .trust-strip {
@@ -1462,9 +1595,389 @@
       .room-section-controls { flex-wrap: wrap; }
     }
 
+    /* ===== SCENARIO SWITCHER ===== */
+    /* ===== SCENARIO SIDE PANEL ===== */
+    .scenario-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 9998;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .scenario-overlay.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .scenario-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 400px;
+      max-width: 90vw;
+      z-index: 9999;
+      background: #fff;
+      box-shadow: -8px 0 30px rgba(0,0,0,0.15);
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      font-family: 'Inter', sans-serif;
+    }
+    .scenario-panel.visible {
+      transform: translateX(0);
+    }
+    .scenario-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+    .scenario-panel-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+    .scenario-panel-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--color-surface-alt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s ease;
+    }
+    .scenario-panel-close:hover {
+      background: var(--color-surface-hover);
+    }
+    .scenario-panel-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .scenario-card {
+      border: 2px solid var(--color-border-light);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: #fff;
+    }
+    .scenario-card:hover {
+      border-color: var(--color-border);
+      background: var(--color-surface-alt);
+    }
+    .scenario-card.active {
+      border-color: #0C83D9;
+      background: rgba(12, 131, 217, 0.04);
+    }
+    .scenario-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .scenario-card-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--color-surface-alt);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-text-secondary);
+      flex-shrink: 0;
+    }
+    .scenario-card.active .scenario-card-num {
+      background: #0C83D9;
+      color: #fff;
+    }
+    .scenario-card-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+    .scenario-card-desc {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--color-text-secondary);
+      margin: 0;
+    }
+    .scenario-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .scenario-card-tag {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--color-surface-alt);
+      color: var(--color-text-tertiary);
+    }
+    .scenario-card.active .scenario-card-tag {
+      background: rgba(12, 131, 217, 0.08);
+      color: #0C83D9;
+    }
+    .scenario-panel-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--color-border-light);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+      line-height: 1.5;
+      text-align: center;
+    }
+    .scenario-active-indicator {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px 4px 8px;
+      border-radius: 100px;
+      background: rgba(12, 131, 217, 0.08);
+      font-size: 12px;
+      font-weight: 600;
+      color: #0C83D9;
+      white-space: nowrap;
+      margin-left: auto;
+      white-space: nowrap;
+    }
+    body {
+      padding-top: 0;
+    }
+
+    /* ===== STICKY FOOTER (multi-room scenarios) ===== */
+    .sticky-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: #fff;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.12);
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      display: none;
+    }
+    .sticky-footer.visible {
+      transform: translateY(0);
+    }
+    .sticky-footer-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .sticky-footer-rooms {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+      overflow: hidden;
+    }
+    .sticky-footer-room {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 16px;
+      background: #F5F5F5;
+      border-radius: 12px;
+      white-space: nowrap;
+    }
+    .sticky-footer-room-thumb {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .sticky-footer-room-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow: hidden;
+    }
+    .sticky-footer-room-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #273240;
+    }
+    .sticky-footer-room-guests {
+      font-size: 12px;
+      color: #616161;
+    }
+    .sticky-footer-room-sep {
+      width: 0;
+      height: 20px;
+      border-left: 1px solid #E6E6E6;
+      flex-shrink: 0;
+    }
+    .sticky-footer-room-price-col {
+      display: flex;
+      flex-direction: column;
+      color: #616161;
+      overflow: hidden;
+    }
+    .sticky-footer-room-price {
+      font-size: 14px;
+      font-weight: 700;
+      color: #616161;
+    }
+    .sticky-footer-room-pernight {
+      font-size: 11px;
+      color: #616161;
+    }
+    .sticky-footer-room-remove {
+      background: none;
+      border: none;
+      color: #9C9C9C;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 4px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .sticky-footer-room-remove:hover { color: #666; }
+    .sticky-footer-right {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex-shrink: 0;
+    }
+    .sticky-footer-total {
+      text-align: right;
+      white-space: nowrap;
+    }
+    .sticky-footer-total-label {
+      font-size: 13px;
+      color: #9C9C9C;
+      line-height: 18px;
+    }
+    .sticky-footer-total-price {
+      font-size: 24px;
+      font-weight: 700;
+      color: #273240;
+      line-height: 30px;
+    }
+    .sticky-footer-total-detail {
+      font-size: 12px;
+      color: #9C9C9C;
+      line-height: 16px;
+    }
+    .sticky-footer-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sticky-footer-cart-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.04);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .sticky-footer-cta {
+      padding: 12px 20px;
+      border-radius: 100px;
+      background: #02AA0E;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s ease;
+      height: 47px;
+      width: 223px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sticky-footer-cta:hover { background: #029A0D; }
+    .sticky-footer-cta:disabled {
+      background: #E6E6E6;
+      color: #999;
+      cursor: not-allowed;
+    }
+
   </style>
 </head>
 <body>
+
+  <!-- SCENARIO OVERLAY & SIDE PANEL -->
+  <div class="scenario-overlay" id="scenarioOverlay" onclick="toggleScenarioPanel()"></div>
+  <div class="scenario-panel" id="scenarioPanel">
+    <div class="scenario-panel-header">
+      <span class="scenario-panel-title">Cenários de reserva</span>
+      <button class="scenario-panel-close" onclick="toggleScenarioPanel()">
+        <span class="mi" style="font-size:18px;color:#273240">close</span>
+      </button>
+    </div>
+    <div class="scenario-panel-body">
+      <div class="scenario-card active" id="scenarioCard1" onclick="selectScenarioFromPanel(1)">
+        <div class="scenario-card-header">
+          <span class="scenario-card-num">1</span>
+          <span class="scenario-card-name">Reserva direta</span>
+        </div>
+        <p class="scenario-card-desc">O utilizador pesquisa 1 quarto para 2 adultos. Seleciona o quarto pretendido e avança diretamente para o check-out.</p>
+        <div class="scenario-card-tags">
+          <span class="scenario-card-tag">1 quarto</span>
+          <span class="scenario-card-tag">2 hóspedes</span>
+          <span class="scenario-card-tag">Sem sticky footer</span>
+        </div>
+      </div>
+      <div class="scenario-card" id="scenarioCard2" onclick="selectScenarioFromPanel(2)">
+        <div class="scenario-card-header">
+          <span class="scenario-card-num">2</span>
+          <span class="scenario-card-name">2 quartos · mesmos critérios</span>
+        </div>
+        <p class="scenario-card-desc">O utilizador pesquisa 2 quartos com os mesmos critérios (2 adultos cada). Pode selecionar o mesmo tipo de quarto com contador de quantidade ou quartos diferentes. Sticky footer acumula seleções.</p>
+        <div class="scenario-card-tags">
+          <span class="scenario-card-tag">2 quartos</span>
+          <span class="scenario-card-tag">4 hóspedes</span>
+          <span class="scenario-card-tag">Contador de quantidade</span>
+          <span class="scenario-card-tag">Sticky footer</span>
+        </div>
+      </div>
+      <div class="scenario-card" id="scenarioCard3" onclick="selectScenarioFromPanel(3)">
+        <div class="scenario-card-header">
+          <span class="scenario-card-num">3</span>
+          <span class="scenario-card-name">2 quartos · critérios diferentes</span>
+        </div>
+        <p class="scenario-card-desc">O utilizador pesquisa 2 quartos com critérios distintos: Quarto 1 para 2 adultos e Quarto 2 para 2 adultos + 1 criança. Navega por steps com toggle, cada step filtra quartos por capacidade. Ao selecionar um quarto, avança automaticamente para o step seguinte.</p>
+        <div class="scenario-card-tags">
+          <span class="scenario-card-tag">2 quartos</span>
+          <span class="scenario-card-tag">5 hóspedes</span>
+          <span class="scenario-card-tag">Steps com toggle</span>
+          <span class="scenario-card-tag">Filtragem por capacidade</span>
+          <span class="scenario-card-tag">Sticky footer</span>
+        </div>
+      </div>
+    </div>
+    <div class="scenario-panel-footer">
+      Protótipo interativo · Selecione um cenário para testar o fluxo de reserva
+    </div>
+  </div>
 
   <!-- PROMO BAR -->
   <div class="promo-bar" id="promoBar">
@@ -1549,7 +2062,7 @@
         <button class="header-icon-btn" title="Carrinho">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 18C11.1046 18 12 18.8954 12 20C12 21.1046 11.1046 22 10 22C8.89543 22 8 21.1046 8 20C8 18.8954 8.89543 18 10 18ZM18 18C19.1046 18 20 18.8954 20 20C20 21.1046 19.1046 22 18 22C16.8954 22 16 21.1046 16 20C16 18.8954 16.8954 18 18 18ZM18 19C17.4477 19 17 19.4477 17 20C17 20.5523 17.4477 21 18 21C18.5523 21 19 20.5523 19 20C19 19.4477 18.5523 19 18 19ZM10 19C9.44772 19 9 19.4477 9 20C9 20.5523 9.44772 21 10 21C10.5523 21 11 20.5523 11 20C11 19.4477 10.5523 19 10 19ZM5.39844 2C6.07791 2.00002 6.67248 2.45679 6.84766 3.11328L7.88477 7H19.4746C20.4292 7.00009 21.1409 7.88001 20.9414 8.81348L19.6582 14.8135C19.5102 15.5053 18.8989 15.9999 18.1914 16H10.1299C9.43063 15.9999 8.82417 15.5166 8.66797 14.835L7.0166 7.62891L5.88184 3.37109C5.82347 3.15223 5.62494 3.00002 5.39844 3H3.5C3.22386 3 3 2.77614 3 2.5C3 2.22386 3.22386 2 3.5 2H5.39844ZM9.64258 14.6113C9.69463 14.8385 9.89686 14.9999 10.1299 15H18.1914C18.4272 14.9999 18.6314 14.8351 18.6807 14.6045L19.9639 8.60449C20.0303 8.2934 19.7927 8.00009 19.4746 8H8.12695L9.64258 14.6113Z" fill="#273240"/></svg>
         </button>
-        <button class="header-icon-btn" title="Menu">
+        <button class="header-icon-btn" title="Menu" onclick="toggleScenarioPanel()">
           <span class="mi" style="font-size:16px;color:#273240">menu</span>
         </button>
       </div>
@@ -1683,7 +2196,7 @@
 
     <!-- Room Section Header -->
     <div class="room-section-header">
-      <div class="room-section-title">Escolha o seu quarto</div>
+      <div class="room-section-title" id="roomSectionTitle">Escolha o seu quarto</div>
       <div class="room-section-controls">
         <div class="room-section-tabs">
           <button class="room-section-tab active">Apenas Dinheiro</button>
@@ -1702,10 +2215,37 @@
       </div>
     </div>
 
+    <!-- ROOM TOGGLE (scenario 3) -->
+    <div class="room-toggle-bar" id="roomToggleBar">
+      <!-- Populated by JS -->
+    </div>
+
     <!-- ROOM CARDS GRID -->
     <div class="rooms-grid" id="rooms-container"></div>
 
   </main>
+
+  <!-- STICKY FOOTER (multi-room scenarios) -->
+  <div class="sticky-footer" id="stickyFooter">
+    <div class="sticky-footer-inner">
+      <div class="sticky-footer-rooms" id="stickyFooterRooms">
+        <!-- Populated by JS -->
+      </div>
+      <div class="sticky-footer-right">
+        <div class="sticky-footer-total" id="stickyFooterTotal">
+          <div class="sticky-footer-total-label">Total para <span id="stickyRoomCount">0</span> quartos</div>
+          <div class="sticky-footer-total-price" id="stickyTotalPrice">R$ 0,00</div>
+          <div class="sticky-footer-total-detail">c/ impostos e taxas · <span id="stickyNights">4</span> noites</div>
+        </div>
+        <div class="sticky-footer-actions">
+          <button class="sticky-footer-cart-btn" title="Carrinho">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.332 17.667C11.4366 17.667 12.332 18.5624 12.332 19.667C12.3318 20.7713 11.4364 21.667 10.332 21.667C9.22762 21.667 8.3323 20.7713 8.33203 19.667C8.33203 18.5624 9.22746 17.667 10.332 17.667ZM18.332 17.667C19.4366 17.667 20.332 18.5624 20.332 19.667C20.3318 20.7713 19.4364 21.667 18.332 21.667C17.2276 21.667 16.3323 20.7713 16.332 19.667C16.332 18.5624 17.2275 17.667 18.332 17.667ZM10.332 18.667C9.77975 18.667 9.33203 19.1147 9.33203 19.667C9.3323 20.2191 9.77991 20.667 10.332 20.667C10.8842 20.667 11.3318 20.2191 11.332 19.667C11.332 19.1147 10.8843 18.667 10.332 18.667ZM18.332 18.667C17.7797 18.667 17.332 19.1147 17.332 19.667C17.3323 20.2191 17.7799 20.667 18.332 20.667C18.8842 20.667 19.3318 20.2191 19.332 19.667C19.332 19.1147 18.8843 18.667 18.332 18.667ZM5.36621 1.66699C6.06784 1.66699 6.67615 2.15335 6.83008 2.83789L7.62598 6.37793L9.62695 14.29C9.68338 14.5115 9.88367 14.667 10.1123 14.667H18.1904C18.4262 14.667 18.6302 14.5019 18.6797 14.2715L19.1006 12.2959C19.1583 12.0261 19.4235 11.8538 19.6934 11.9111C19.9634 11.9687 20.1357 12.2348 20.0781 12.5049L19.6572 14.4795C19.5095 15.1717 18.8982 15.667 18.1904 15.667H10.1123C9.42578 15.667 8.82586 15.2006 8.65723 14.5352L6.65625 6.62305L6.65332 6.61035L5.85449 3.05762C5.80319 2.82943 5.60009 2.66699 5.36621 2.66699H3.5C3.22402 2.66699 3.00026 2.44291 3 2.16699C3 1.89085 3.22386 1.66699 3.5 1.66699H5.36621ZM16.5 2.60059C16.7761 2.60059 17 2.82444 17 3.10059V6.59961L20.5 6.60059C20.7761 6.60059 21 6.82444 21 7.10059C20.9997 7.3765 20.776 7.60059 20.5 7.60059L17 7.59961V11.1006C16.9997 11.3765 16.776 11.6006 16.5 11.6006C16.224 11.6006 16.0003 11.3765 16 11.1006V7.59961H12.5C12.2239 7.59961 12 7.37575 12 7.09961C12.0003 6.82369 12.224 6.59961 12.5 6.59961H16V3.10059C16 2.82444 16.2239 2.60059 16.5 2.60059Z" fill="#273240"/></svg>
+          </button>
+          <button class="sticky-footer-cta" id="stickyFooterCTA" disabled>Continuar reserva →</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -1738,6 +2278,7 @@
         id: 'room-1',
         name: 'Classic Vista Jardim',
         area: '28 m²', bed: 'Cama King', maxGuests: 'Max. 2 adultos', extra: 'Varanda',
+        capacity: { adults: 2, children: 0 },
         amenities: ['Wi-Fi', 'A/C', 'Minibar', 'Cofre', 'TV 43"'],
         badge: null,
         image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=420&h=280&fit=crop&q=80', photos: 6,
@@ -1752,6 +2293,7 @@
         id: 'room-2',
         name: 'Classic Vista Mar Lateral',
         area: '28 m²', bed: 'King ou Twin', maxGuests: 'Max. 2 adultos', extra: 'Varanda',
+        capacity: { adults: 2, children: 0 },
         amenities: ['Wi-Fi', 'A/C', 'Minibar', 'Cofre', 'TV 43"'],
         badge: null,
         image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=420&h=280&fit=crop&q=80', photos: 5,
@@ -1766,6 +2308,7 @@
         id: 'room-3',
         name: 'Superior Vista Mar',
         area: '35 m²', bed: 'King ou Twin', maxGuests: 'Max. 2+1 criança', extra: 'Terraço privado',
+        capacity: { adults: 2, children: 1 },
         amenities: ['Wi-Fi', 'A/C', 'Minibar', 'Roupão', 'Nespresso', 'TV 55"'],
         badge: { type: 'urgency', text: 'Últimos 3!' },
         image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=420&h=280&fit=crop&q=80', photos: 8,
@@ -1780,6 +2323,7 @@
         id: 'room-4',
         name: 'Quarto Familiar Vista Piscina',
         area: '42 m²', bed: '1 King + 2 Singles', maxGuests: 'Max. 2+2 crianças', extra: 'Terraço amplo',
+        capacity: { adults: 2, children: 2 },
         amenities: ['Wi-Fi', 'A/C', 'Minibar', 'Cofre', 'Consola', 'TV 55"'],
         badge: null,
         image: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=420&h=280&fit=crop&q=80', photos: 7,
@@ -1794,6 +2338,7 @@
         id: 'room-5',
         name: 'Superior Vista Mar Frontal',
         area: '38 m²', bed: 'Cama King', maxGuests: 'Max. 2 adultos', extra: 'Varanda panorâmica',
+        capacity: { adults: 2, children: 0 },
         amenities: ['Wi-Fi', 'A/C', 'Minibar premium', 'Roupão', 'Nespresso', 'TV 55"'],
         badge: null, status: 'sold-out',
         image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=420&h=280&fit=crop&q=80', photos: 9,
@@ -1808,6 +2353,7 @@
         id: 'room-6',
         name: 'Suite Premium Vista Mar',
         area: '52 m²', bed: 'Cama King', maxGuests: 'Max. 3 adultos', extra: 'Sala separada',
+        capacity: { adults: 3, children: 0 },
         amenities: ['Wi-Fi', 'A/C', 'Minibar premium', 'Jacuzzi', 'Roupão', 'Nespresso', 'TV 65"'],
         badge: null, status: 'restriction', restriction: 'Mínimo 5 noites',
         image: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=420&h=280&fit=crop&q=80', photos: 10,
@@ -2117,6 +2663,448 @@
         siteHeader.classList.remove('scrolled');
       }
     }, { passive: true });
+
+    // ===== SCENARIO MANAGEMENT =====
+    const SCENARIOS = {
+      1: {
+        label: 'Selecionar quarto → check-out direto',
+        searchGuests: '2 Hóspedes · 1 Quarto',
+        sectionTitle: 'Escolha o seu quarto',
+        requiredRooms: 1,
+        roomCriteria: [{ adults: 2, children: 0 }],
+        showStickyFooter: false
+      },
+      2: {
+        label: '2 quartos, mesmos critérios (2 adultos cada)',
+        searchGuests: '4 Hóspedes · 2 Quartos',
+        sectionTitle: 'Escolha os seus quartos',
+        requiredRooms: 2,
+        roomCriteria: [{ adults: 2, children: 0 }, { adults: 2, children: 0 }],
+        showStickyFooter: true
+      },
+      3: {
+        label: '2 quartos, critérios diferentes',
+        searchGuests: '5 Hóspedes · 2 Quartos',
+        sectionTitle: 'Escolha os seus quartos',
+        requiredRooms: 2,
+        roomCriteria: [{ adults: 2, children: 0 }, { adults: 2, children: 1, childAge: 8 }],
+        showStickyFooter: true
+      }
+    };
+
+    let currentScenario = 1;
+    let selectedRooms = []; // array of { roomId, name, price, total, perNight, image, qty, slotIndex }
+    let activeRoomSlot = 0; // for scenario 3: which room slot (0 or 1) we're selecting for
+
+    const USER_ICON_SVG = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 2C6.34315 2 5 3.34315 5 5C5 6.65685 6.34315 8 8 8C9.65685 8 11 6.65685 11 5C11 3.34315 9.65685 2 8 2ZM4 5C4 2.79086 5.79086 1 8 1C10.2091 1 12 2.79086 12 5C12 7.20914 10.2091 9 8 9C5.79086 9 4 7.20914 4 5ZM3.5 13C3.5 11.067 5.067 9.5 7 9.5H9C10.933 9.5 12.5 11.067 12.5 13V14.5C12.5 14.7761 12.2761 15 12 15C11.7239 15 11.5 14.7761 11.5 14.5V13C11.5 11.6193 10.3807 10.5 9 10.5H7C5.61929 10.5 4.5 11.6193 4.5 13V14.5C4.5 14.7761 4.27614 15 4 15C3.72386 15 3.5 14.7761 3.5 14.5V13Z" fill="currentColor"/></svg>`;
+
+    const TRASH_SVG = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4V3C7 1.89543 7.89543 1 9 1H15C16.1046 1 17 1.89543 17 3V4H20C20.5523 4 21 4.44772 21 5C21 5.55228 20.5523 6 20 6H19V19C19 20.6569 17.6569 22 16 22H8C6.34315 22 5 20.6569 5 19V6H4C3.44772 6 3 5.55228 3 5C3 4.44772 3.44772 4 4 4H7ZM9 4H15V3H9V4ZM7 6V19C7 19.5523 7.44772 20 8 20H16C16.5523 20 17 19.5523 17 19V6H7Z" fill="currentColor"/></svg>`;
+    const PLUS_SVG = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 2.5V13.5M2.5 8H13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
+    const MINUS_SVG = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 8H13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
+
+    function toggleScenarioPanel() {
+      const panel = document.getElementById('scenarioPanel');
+      const overlay = document.getElementById('scenarioOverlay');
+      const isOpen = panel.classList.contains('visible');
+      if (isOpen) {
+        panel.classList.remove('visible');
+        overlay.classList.remove('visible');
+      } else {
+        panel.classList.add('visible');
+        overlay.classList.add('visible');
+      }
+    }
+
+    function selectScenarioFromPanel(num) {
+      switchScenario(num);
+      // Update active card in panel
+      document.querySelectorAll('.scenario-card').forEach((card, i) => {
+        card.classList.toggle('active', i + 1 === num);
+      });
+      // Close panel
+      toggleScenarioPanel();
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function switchScenario(num) {
+      currentScenario = num;
+      selectedRooms = [];
+      activeRoomSlot = 0;
+      const scenario = SCENARIOS[num];
+
+      // Update active card in panel (if open)
+      document.querySelectorAll('.scenario-card').forEach((card, i) => {
+        card.classList.toggle('active', i + 1 === num);
+      });
+
+      // Update section title
+      document.getElementById('roomSectionTitle').textContent = scenario.sectionTitle;
+
+      // Update search pill guest info
+      document.querySelectorAll('.search-pill-value').forEach(el => {
+        if (el.textContent.includes('Hóspedes') || el.textContent.includes('Quarto')) {
+          el.textContent = scenario.searchGuests;
+        }
+      });
+
+      // Show/hide sticky footer
+      const stickyFooter = document.getElementById('stickyFooter');
+      if (scenario.showStickyFooter) {
+        stickyFooter.style.display = 'block';
+        stickyFooter.classList.remove('visible');
+      } else {
+        stickyFooter.style.display = 'none';
+        stickyFooter.classList.remove('visible');
+      }
+
+      // Show/hide room toggle
+      const toggleBar = document.getElementById('roomToggleBar');
+      if (num === 3) {
+        toggleBar.classList.add('visible');
+        renderRoomToggle();
+      } else {
+        toggleBar.classList.remove('visible');
+      }
+
+      // Remove selected states from cards
+      document.querySelectorAll('.room-card.selected').forEach(c => c.classList.remove('selected'));
+      // Reset display of all cards
+      document.querySelectorAll('.room-card').forEach(c => c.style.display = '');
+
+      // Update room card button behavior
+      updateRoomCardButtons();
+    }
+
+    function renderRoomToggle() {
+      const scenario = SCENARIOS[3];
+      const toggleBar = document.getElementById('roomToggleBar');
+      let html = '';
+      scenario.roomCriteria.forEach((criteria, i) => {
+        const isActive = activeRoomSlot === i;
+        const isCompleted = selectedRooms[i] && !isActive;
+        const criteriaLabel = criteria.children > 0
+          ? `${criteria.adults} adultos · ${criteria.children} criança`
+          : `${criteria.adults} adultos`;
+        const cls = isActive ? 'active' : (isCompleted ? 'completed' : '');
+        html += `
+          <button class="room-toggle-btn ${cls}" onclick="setActiveRoomSlot(${i})">
+            <span class="toggle-label">Quarto ${i + 1}</span>
+            <span class="toggle-sep"></span>
+            <span class="toggle-criteria">${USER_ICON_SVG} ${criteriaLabel}</span>
+          </button>`;
+      });
+      toggleBar.innerHTML = html;
+    }
+
+    function setActiveRoomSlot(index) {
+      activeRoomSlot = index;
+      renderRoomToggle();
+      updateRoomCardButtons();
+    }
+
+    function filterRoomsByCapacity() {
+      // In scenario 3, show/hide rooms based on active slot criteria
+      const scenario = SCENARIOS[currentScenario];
+      document.querySelectorAll('.room-card').forEach(card => {
+        const roomId = card.id;
+        const room = rooms.find(r => r.id === roomId);
+        if (!room) return;
+
+        if (currentScenario === 3) {
+          const criteria = scenario.roomCriteria[activeRoomSlot];
+          const fits = room.capacity.adults >= criteria.adults && room.capacity.children >= criteria.children;
+          // Hide rooms selected for OTHER slots (distinct results per step)
+          const selectedForOtherSlot = selectedRooms.some((r, i) => r && r.roomId === roomId && i !== activeRoomSlot);
+          if (fits && !selectedForOtherSlot) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        } else {
+          // Show all rooms for scenarios 1 & 2
+          card.style.display = '';
+        }
+      });
+    }
+
+    function updateRoomCardButtons() {
+      const scenario = SCENARIOS[currentScenario];
+      filterRoomsByCapacity();
+      document.querySelectorAll('.room-card:not(.sold-out):not(.restricted)').forEach(card => {
+        const reserveRow = card.querySelector('.reserve-row');
+        if (!reserveRow) return;
+
+        const roomId = card.id;
+        const sel = selectedRooms.find(r => r && r.roomId === roomId);
+        const isSelected = !!sel;
+
+        // Update card border
+        card.classList.toggle('selected', isSelected);
+
+        if (scenario.requiredRooms === 1) {
+          // Scenario 1: direct checkout
+          reserveRow.innerHTML = `
+            <button class="btn-reserve">Reservar</button>
+            <button class="btn-cart" title="Adicionar ao carrinho">${itIcon('carrinho', 22)}</button>`;
+        } else if (currentScenario === 2) {
+          // Scenario 2: multi-room same criteria (qty counter)
+          if (isSelected) {
+            const qtyText = sel.qty === 1 ? '1 Selecionado' : `${sel.qty} Selecionados`;
+            const leftIcon = sel.qty > 1 ? MINUS_SVG : TRASH_SVG;
+            const leftClass = sel.qty > 1 ? 'minus' : 'trash';
+            reserveRow.innerHTML = `
+              <div class="qty-selector">
+                <button class="qty-btn ${leftClass}" onclick="event.stopPropagation(); deselectRoom('${roomId}')" title="${sel.qty > 1 ? 'Reduzir' : 'Remover'}">${leftIcon}</button>
+                <span class="qty-text">${qtyText}</span>
+                <button class="qty-btn plus" onclick="event.stopPropagation(); addMoreRoom('${roomId}')" title="Adicionar mais">${PLUS_SVG}</button>
+              </div>
+              <button class="btn-cart" title="Adicionar ao carrinho">${itIcon('carrinho', 22)}</button>`;
+          } else {
+            const canSelect = selectedRooms.reduce((sum, r) => sum + r.qty, 0) < scenario.requiredRooms;
+            reserveRow.innerHTML = `
+              <button class="btn-reserve" ${canSelect ? '' : 'disabled'} onclick="selectRoom('${roomId}')">Selecionar</button>
+              <button class="btn-cart" title="Adicionar ao carrinho">${itIcon('carrinho', 22)}</button>`;
+          }
+        } else if (currentScenario === 3) {
+          // Scenario 3: different criteria — one room per slot, no counter
+          // Find which slot (if any) this room is selected for
+          const selectedSlot = selectedRooms.findIndex(r => r && r.roomId === roomId);
+          const isSelectedForCurrentSlot = selectedSlot === activeRoomSlot;
+          const isSelectedForOtherSlot = selectedSlot !== -1 && selectedSlot !== activeRoomSlot;
+          const currentSlotFilled = !!selectedRooms[activeRoomSlot];
+
+          // Border only shows on selected card when viewing its own step
+          card.classList.toggle('selected', isSelectedForCurrentSlot);
+
+          if (isSelectedForCurrentSlot) {
+            // Selected for active step — show "Remover" with trash, centered
+            reserveRow.innerHTML = `
+              <div class="qty-selector remove-mode" onclick="event.stopPropagation(); deselectRoomV3(${activeRoomSlot})" style="cursor:pointer;">
+                <span style="display:flex;align-items:center;gap:6px;color:#4539F9;">${TRASH_SVG}<span class="qty-text">Remover</span></span>
+              </div>
+              <button class="btn-cart" title="Adicionar ao carrinho">${itIcon('carrinho', 22)}</button>`;
+          } else if (currentSlotFilled) {
+            // Current slot already filled with another room — show "Selecionar" to allow replacing
+            reserveRow.innerHTML = `
+              <button class="btn-reserve" onclick="selectRoomV3('${roomId}')">Selecionar</button>
+              <button class="btn-cart" title="Adicionar ao carrinho">${itIcon('carrinho', 22)}</button>`;
+          } else {
+            // Can select for current slot
+            reserveRow.innerHTML = `
+              <button class="btn-reserve" onclick="selectRoomV3('${roomId}')">Selecionar</button>
+              <button class="btn-cart" title="Adicionar ao carrinho">${itIcon('carrinho', 22)}</button>`;
+          }
+        }
+      });
+    }
+
+    function selectRoomV3(roomId) {
+      const scenario = SCENARIOS[3];
+      const room = rooms.find(r => r.id === roomId);
+      if (!room) return;
+
+      const state = roomState[roomId];
+      const paymentMethod = PAYMENT_METHODS.find(p => p.id === state.payment);
+      const basePrice = getPrice(room, state);
+      const price = Math.round(basePrice * paymentMethod.modifier * 100) / 100;
+      const total = price * NIGHTS;
+
+      // Assign to current slot (use sparse array)
+      selectedRooms[activeRoomSlot] = {
+        roomId,
+        name: room.name,
+        price: price,
+        total: total,
+        perNight: price,
+        image: room.image,
+        qty: 1,
+        slotIndex: activeRoomSlot
+      };
+
+      // Auto-switch to next empty slot (only if not the last step)
+      let nextEmpty = -1;
+      for (let i = 0; i < scenario.requiredRooms; i++) {
+        if (!selectedRooms[i]) { nextEmpty = i; break; }
+      }
+      const didAdvance = nextEmpty !== -1 && nextEmpty !== activeRoomSlot;
+      if (nextEmpty !== -1) {
+        activeRoomSlot = nextEmpty;
+      }
+      // If all filled, stay on current slot
+
+      renderRoomToggle();
+      updateStickyFooter();
+      updateRoomCardButtons();
+
+      // Scroll to room section header when auto-advancing to next step
+      if (didAdvance) {
+        setTimeout(() => {
+          const anchor = document.querySelector('.loyalty-banner');
+          if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
+    }
+
+    function deselectRoomV3(slotIndex) {
+      selectedRooms[slotIndex] = undefined;
+      activeRoomSlot = slotIndex;
+
+      renderRoomToggle();
+      updateStickyFooter();
+      updateRoomCardButtons();
+    }
+
+    function selectRoom(roomId) {
+      const scenario = SCENARIOS[currentScenario];
+      const totalQty = selectedRooms.reduce((sum, r) => sum + r.qty, 0);
+      if (totalQty >= scenario.requiredRooms) return;
+
+      const room = rooms.find(r => r.id === roomId);
+      if (!room) return;
+
+      const state = roomState[roomId];
+      const paymentMethod = PAYMENT_METHODS.find(p => p.id === state.payment);
+      const basePrice = getPrice(room, state);
+      const price = Math.round(basePrice * paymentMethod.modifier * 100) / 100;
+      const total = price * NIGHTS;
+
+      selectedRooms.push({
+        roomId,
+        name: room.name,
+        price: price,
+        total: total,
+        perNight: price,
+        image: room.image,
+        qty: 1,
+        slotIndex: selectedRooms.length
+      });
+
+      updateStickyFooter();
+      updateRoomCardButtons();
+    }
+
+    function addMoreRoom(roomId) {
+      const scenario = SCENARIOS[currentScenario];
+      const totalQty = selectedRooms.reduce((sum, r) => sum + r.qty, 0);
+      if (totalQty >= scenario.requiredRooms) return;
+
+      const sel = selectedRooms.find(r => r.roomId === roomId);
+      if (sel) {
+        sel.qty++;
+        sel.total = sel.price * NIGHTS * sel.qty;
+      }
+
+      updateStickyFooter();
+      updateRoomCardButtons();
+    }
+
+    function deselectRoom(roomId) {
+      const sel = selectedRooms.find(r => r.roomId === roomId);
+      if (sel && sel.qty > 1) {
+        sel.qty--;
+        sel.total = sel.price * NIGHTS * sel.qty;
+      } else {
+        selectedRooms = selectedRooms.filter(r => r.roomId !== roomId);
+      }
+      selectedRooms.forEach((r, i) => r.slotIndex = i);
+
+      updateStickyFooter();
+      updateRoomCardButtons();
+    }
+
+    function updateStickyFooter() {
+      const scenario = SCENARIOS[currentScenario];
+      if (!scenario.showStickyFooter) return;
+
+      const stickyFooter = document.getElementById('stickyFooter');
+      const roomsContainer = document.getElementById('stickyFooterRooms');
+      const totalPriceEl = document.getElementById('stickyTotalPrice');
+      const roomCount = document.getElementById('stickyRoomCount');
+      const ctaBtn = document.getElementById('stickyFooterCTA');
+
+      // Count filled rooms (handle sparse array for scenario 3)
+      const filledRooms = selectedRooms.filter(r => !!r);
+      const totalQty = filledRooms.reduce((sum, r) => sum + r.qty, 0);
+
+      // If no rooms selected, hide footer
+      if (totalQty === 0) {
+        stickyFooter.classList.remove('visible');
+        return;
+      }
+
+      // Build mini room cards — one entry per unit (not accumulated)
+      let roomsHTML = '';
+      filledRooms.forEach(sel => {
+        const room = rooms.find(r => r.id === sel.roomId);
+        const slotIdx = currentScenario === 3 ? sel.slotIndex : 0;
+        const criteria = scenario.roomCriteria[slotIdx] || scenario.roomCriteria[0];
+        const guestLabel = criteria.children > 0
+          ? `${criteria.adults} adultos + ${criteria.children} criança`
+          : `${criteria.adults} adultos`;
+        const unitTotal = sel.price * NIGHTS;
+        const removeAction = currentScenario === 3
+          ? `deselectRoomV3(${sel.slotIndex})`
+          : `deselectRoom('${sel.roomId}')`;
+
+        for (let q = 0; q < sel.qty; q++) {
+          roomsHTML += `
+            <div class="sticky-footer-room">
+              <img class="sticky-footer-room-thumb" src="${sel.image}" alt="${sel.name}">
+              <div class="sticky-footer-room-info">
+                <span class="sticky-footer-room-name">${sel.name}</span>
+                <span class="sticky-footer-room-guests">${guestLabel}</span>
+              </div>
+              <div class="sticky-footer-room-sep"></div>
+              <div class="sticky-footer-room-price-col">
+                <span class="sticky-footer-room-price">R$ ${unitTotal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                <span class="sticky-footer-room-pernight">R$ ${sel.perNight.toLocaleString('pt-BR', {minimumFractionDigits: 2})}/noite</span>
+              </div>
+              <button class="sticky-footer-room-remove" onclick="${removeAction}">✕</button>
+            </div>`;
+        }
+      });
+      roomsContainer.innerHTML = roomsHTML;
+
+      // Update totals
+      const total = filledRooms.reduce((sum, r) => sum + r.total, 0);
+      roomCount.textContent = totalQty;
+      totalPriceEl.textContent = `R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+
+      // Enable/disable CTA
+      ctaBtn.disabled = totalQty < scenario.requiredRooms;
+
+      // Show footer with animation
+      requestAnimationFrame(() => {
+        stickyFooter.classList.add('visible');
+      });
+    }
+
+    // Override renderRooms to re-apply scenario state after re-render
+    const _originalRenderRooms = renderRooms;
+    renderRooms = function() {
+      _originalRenderRooms();
+      updateRoomCardButtons();
+      // Re-update sticky footer prices if rooms were re-rendered (price change)
+      if (SCENARIOS[currentScenario].showStickyFooter) {
+        selectedRooms.forEach(sel => {
+          if (!sel) return; // skip empty slots (scenario 3)
+          const room = rooms.find(r => r.id === sel.roomId);
+          if (room) {
+            const state = roomState[sel.roomId];
+            const paymentMethod = PAYMENT_METHODS.find(p => p.id === state.payment);
+            const basePrice = getPrice(room, state);
+            sel.price = Math.round(basePrice * paymentMethod.modifier * 100) / 100;
+            sel.perNight = sel.price;
+            sel.total = sel.price * NIGHTS * sel.qty;
+          }
+        });
+        updateStickyFooter();
+      }
+    };
+
+    // Initialize scenario 1
+    switchScenario(1);
   </script>
 
 </body>
