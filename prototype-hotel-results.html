@@ -192,6 +192,8 @@
       background: #273240;
       color: #fff;
       border-color: #273240;
+      --fill-0: #FFFFFF;
+      --stroke-0: #FFFFFF;
     }
     .header-tab-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
 
@@ -497,7 +499,7 @@
       align-items: center;
       gap: 8px;
       padding: 12px 16px;
-      border-radius: 100px;
+      border-radius: 8px;
       border: 1px solid #C5C5C5;
       font-size: 14px;
       font-weight: 500;
@@ -512,7 +514,7 @@
       align-items: center;
       gap: 4px;
       padding: 12px 16px;
-      border-radius: 100px;
+      border-radius: 8px;
       border: 1px solid #C5C5C5;
       font-size: 14px;
       font-weight: 400;
@@ -668,7 +670,7 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
-      flex: 1;
+      margin-top: auto;
     }
     .hotel-card-member-tag {
       display: inline-flex;
@@ -684,7 +686,7 @@
     }
     .hotel-card-price-label {
       font-size: 13px;
-      color: var(--color-text-secondary);
+      color: #9C9C9C;
     }
     .hotel-card-price-row {
       display: flex;
@@ -703,14 +705,14 @@
       line-height: 1.2;
     }
     .hotel-card-price-night {
-      font-size: 14px;
-      color: var(--color-text-secondary);
+      font-size: 13px;
+      color: #9C9C9C;
       align-self: flex-end;
       margin-bottom: 2px;
     }
     .hotel-card-price-total {
       font-size: 13px;
-      color: var(--color-text-secondary);
+      color: #9C9C9C;
     }
 
     /* CTA */
@@ -813,11 +815,11 @@
       <!-- Header Tabs -->
       <div class="header-tabs">
         <button class="header-tab-btn active">
-          <span class="mi" style="font-size:18px">hotel</span>
+          <span class="it-icon" data-icon="hotel" data-size="18"></span>
           Alojamento
         </button>
         <button class="header-tab-btn">
-          <span class="mi" style="font-size:18px">confirmation_number</span>
+          <span class="it-icon" data-icon="ingresso" data-size="18"></span>
           Experiências
         </button>
       </div>
@@ -826,7 +828,7 @@
       <div class="header-search-inline">
         <div class="search-pill">
           <div class="search-pill-field">
-            <span class="mi" style="font-size:20px">location_on</span>
+            <span class="it-icon" data-icon="pin" data-size="20"></span>
             <div class="search-pill-texts">
               <div class="search-pill-label">Onde quer ir?</div>
               <div class="search-pill-value">UX-UI Premium Design</div>
@@ -834,7 +836,7 @@
           </div>
           <div class="search-pill-divider"></div>
           <div class="search-pill-field">
-            <span class="mi" style="font-size:20px">calendar_today</span>
+            <span class="it-icon" data-icon="calendario" data-size="20"></span>
             <div class="search-pill-texts">
               <div class="search-pill-label">Quando quer ir?</div>
               <div class="search-pill-value">Seg 21 Mar — Sex 25 Mar</div>
@@ -842,7 +844,7 @@
           </div>
           <div class="search-pill-divider"></div>
           <div class="search-pill-field">
-            <span class="mi" style="font-size:20px">person</span>
+            <span class="it-icon" data-icon="usuario" data-size="20"></span>
             <div class="search-pill-texts">
               <div class="search-pill-label">Quem vai?</div>
               <div class="search-pill-value">2 Hóspedes · 1 Quarto</div>
@@ -850,14 +852,14 @@
           </div>
           <div class="search-pill-divider"></div>
           <div class="search-pill-field">
-            <span class="mi" style="font-size:20px">local_offer</span>
+            <span class="it-icon" data-icon="promocao" data-size="20"></span>
             <div class="search-pill-texts">
               <div class="search-pill-label">Tem um desconto?</div>
               <div class="search-pill-value">VERAO26</div>
             </div>
           </div>
           <button class="search-pill-btn">
-            <span class="mi" style="font-size:18px;color:#fff">search</span>
+            <span class="it-icon" data-icon="buscar" data-size="18" style="--stroke-0:#fff"></span>
           </button>
         </div>
       </div>
@@ -866,7 +868,7 @@
       <div class="header-actions">
         <a href="#" class="header-login-text">Login</a>
         <div class="header-login-icon" title="Login">
-          <span class="mi" style="font-size:16px;color:#273240">person</span>
+          <span class="it-icon" data-icon="usuario" data-size="16" style="--fill-0:#273240"></span>
         </div>
         <div class="header-icon-btn flag-icon" title="Brasil">
           <svg width="16" height="16" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#009739"/><polygon points="20,7 35,20 20,33 5,20" fill="#FFDF00"/><circle cx="20" cy="20" r="7" fill="#002776"/><path d="M13.5,20.5 Q20,17 26.5,20.5" fill="none" stroke="#fff" stroke-width="0.8"/></svg>
@@ -875,7 +877,7 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 18C11.1046 18 12 18.8954 12 20C12 21.1046 11.1046 22 10 22C8.89543 22 8 21.1046 8 20C8 18.8954 8.89543 18 10 18ZM18 18C19.1046 18 20 18.8954 20 20C20 21.1046 19.1046 22 18 22C16.8954 22 16 21.1046 16 20C16 18.8954 16.8954 18 18 18ZM18 19C17.4477 19 17 19.4477 17 20C17 20.5523 17.4477 21 18 21C18.5523 21 19 20.5523 19 20C19 19.4477 18.5523 19 18 19ZM10 19C9.44772 19 9 19.4477 9 20C9 20.5523 9.44772 21 10 21C10.5523 21 11 20.5523 11 20C11 19.4477 10.5523 19 10 19ZM5.39844 2C6.07791 2.00002 6.67248 2.45679 6.84766 3.11328L7.88477 7H19.4746C20.4292 7.00009 21.1409 7.88001 20.9414 8.81348L19.6582 14.8135C19.5102 15.5053 18.8989 15.9999 18.1914 16H10.1299C9.43063 15.9999 8.82417 15.5166 8.66797 14.835L7.0166 7.62891L5.88184 3.37109C5.82347 3.15223 5.62494 3.00002 5.39844 3H3.5C3.22386 3 3 2.77614 3 2.5C3 2.22386 3.22386 2 3.5 2H5.39844ZM9.64258 14.6113C9.69463 14.8385 9.89686 14.9999 10.1299 15H18.1914C18.4272 14.9999 18.6314 14.8351 18.6807 14.6045L19.9639 8.60449C20.0303 8.2934 19.7927 8.00009 19.4746 8H8.12695L9.64258 14.6113Z" fill="#273240"/></svg>
         </button>
         <button class="header-icon-btn" title="Menu">
-          <span class="mi" style="font-size:16px;color:#273240">menu</span>
+          <span class="it-icon" data-icon="menu" data-size="16" style="--fill-0:#273240"></span>
         </button>
       </div>
     </div>
@@ -884,7 +886,7 @@
     <div class="header-search-row" id="floatingSearch">
       <div class="search-pill">
         <div class="search-pill-field">
-          <span class="mi" style="font-size:20px">location_on</span>
+          <span class="it-icon" data-icon="pin" data-size="20"></span>
           <div class="search-pill-texts">
             <div class="search-pill-label">Onde quer ir?</div>
             <div class="search-pill-value">UX-UI Premium Design</div>
@@ -892,7 +894,7 @@
         </div>
         <div class="search-pill-divider"></div>
         <div class="search-pill-field">
-          <span class="mi" style="font-size:20px">calendar_today</span>
+          <span class="it-icon" data-icon="calendario" data-size="20"></span>
           <div class="search-pill-texts">
             <div class="search-pill-label">Quando quer ir?</div>
             <div class="search-pill-value">Seg 21 Mar — Sex 25 Mar</div>
@@ -900,7 +902,7 @@
         </div>
         <div class="search-pill-divider"></div>
         <div class="search-pill-field">
-          <span class="mi" style="font-size:20px">person</span>
+          <span class="it-icon" data-icon="usuario" data-size="20"></span>
           <div class="search-pill-texts">
             <div class="search-pill-label">Quem vai?</div>
             <div class="search-pill-value">2 Hóspedes · 1 Quarto</div>
@@ -908,14 +910,14 @@
         </div>
         <div class="search-pill-divider"></div>
         <div class="search-pill-field">
-          <span class="mi" style="font-size:20px">local_offer</span>
+          <span class="it-icon" data-icon="promocao" data-size="20"></span>
           <div class="search-pill-texts">
             <div class="search-pill-label">Tem um desconto?</div>
             <div class="search-pill-value">VERAO26</div>
           </div>
         </div>
         <button class="search-pill-btn">
-          <span class="mi" style="font-size:20px;color:#fff">search</span>
+          <span class="it-icon" data-icon="buscar" data-size="20" style="--stroke-0:#fff"></span>
         </button>
       </div>
     </div>
@@ -927,7 +929,7 @@
     <!-- Loyalty Banner -->
     <div class="loyalty-banner">
       <div class="loyalty-banner-icon">
-        <span class="mi" style="font-size:36px;color:#4539F9">loyalty</span>
+        <span class="it-icon" data-icon="star-filled" data-size="36" style="--fill-0:#4539F9"></span>
       </div>
       <div class="loyalty-banner-content">
         <div class="loyalty-banner-title">Reserve com 10% de desconto exclusivo</div>
@@ -940,12 +942,12 @@
       <div class="section-title">Escolha sua hospedagem</div>
       <div class="section-controls">
         <button class="btn-map">
-          <span class="mi" style="font-size:16px">map</span>
+          <span class="it-icon" data-icon="pin" data-size="16"></span>
           Ver no Mapa
         </button>
         <button class="btn-sort">
           Ordenar por <span class="sort-value">mais barato primeiro</span>
-          <span class="mi" style="font-size:16px">expand_more</span>
+          <span class="it-icon" data-icon="angle-down" data-size="16"></span>
         </button>
       </div>
     </div>
@@ -971,7 +973,19 @@
     </div>
   </footer>
 
+  <script src="it-icons.js?v=2"></script>
   <script>
+    // ===== AMENITY MAP (data key → itIcon name) =====
+    const AMENITY_MAP = {
+      'ac_unit': 'ar-condicionado',
+      'local_bar': 'cafe-manha',
+      'accessible': 'servicos',
+      'spa': 'servico-quarto',
+      'pets': 'pet',
+      'pool': 'piscina',
+      'wifi': 'wifi'
+    };
+
     // ===== HOTEL DATA =====
     const HOTELS = [
       {
@@ -1106,7 +1120,7 @@
     ];
 
     // ===== STAR SVG =====
-    const STAR_SVG = '<svg class="star-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.47 5.01 5.53.8-4 3.9.94 5.49L10 14.26 5.06 16.7l.94-5.49-4-3.9 5.53-.8L10 1.5z"/></svg>';
+    const STAR_SVG = `<span style="color:#FEC437;display:inline-flex">${itIcon('star-filled', 16)}</span>`;
 
     // ===== FORMAT PRICE =====
     function formatPrice(value) {
@@ -1135,8 +1149,8 @@
         if (hotel.badge) {
           const badgeClass = hotel.badge.type === 'sold-out' ? 'sold-out-badge' : 'restriction-badge';
           const badgeIcon = hotel.badge.type === 'sold-out'
-            ? '<span class="mi" style="font-size:14px">block</span>'
-            : '<span class="mi" style="font-size:14px">warning</span>';
+            ? `<span style="--fill-0:#fff;--stroke-0:#fff">${itIcon('fechar', 14)}</span>`
+            : `<span style="--fill-0:#fff;--stroke-0:#fff">${itIcon('info', 14)}</span>`;
           badgeHtml = `<div class="hotel-card-badge ${badgeClass}">${badgeIcon} ${hotel.badge.text}</div>`;
         }
 
@@ -1153,9 +1167,10 @@
         }
 
         // Amenities
-        const amenitiesHtml = hotel.amenities.map(a =>
-          `<span class="hotel-card-amenity"><span class="mi">${a}</span></span>`
-        ).join('');
+        const amenitiesHtml = hotel.amenities.map(a => {
+          const iconName = AMENITY_MAP[a] || a;
+          return `<span class="hotel-card-amenity" style="--fill-0:#273240;--stroke-0:#273240">${itIcon(iconName, 20)}</span>`;
+        }).join('');
 
         card.innerHTML = `
           <div class="hotel-card-gallery">
@@ -1172,7 +1187,7 @@
             <div class="hotel-card-stars">${starsHtml}</div>
             <div class="hotel-card-name">${hotel.name}</div>
             <div class="hotel-card-location">
-              <span class="mi">location_on</span>
+              <span style="--fill-0:#8B9099">${itIcon('pin', 14)}</span>
               ${hotel.location}
             </div>
           </div>
@@ -1210,8 +1225,18 @@
       document.getElementById('promoBar').style.display = 'none';
     });
 
+    // ===== INIT ICONS =====
+    function initIcons() {
+      document.querySelectorAll('[data-icon]').forEach(el => {
+        const name = el.getAttribute('data-icon');
+        const size = parseInt(el.getAttribute('data-size') || '24');
+        el.innerHTML = itIcon(name, size);
+      });
+    }
+
     // ===== INIT =====
     renderHotels();
+    initIcons();
   </script>
 </body>
 </html>
