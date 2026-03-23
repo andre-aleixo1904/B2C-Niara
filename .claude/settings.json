@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.pestana.com)",
+      "mcp__claude_ai_Figma__get_metadata",
+      "Bash(python3 -m http.server 8080)",
+      "Bash(git init)",
+      "Bash(git remote add origin https://github.com/andre-aleixo1904/B2C-Niara.git)",
+      "Bash(git add prototype-resultados.html prototype-resultados-v2.html)"
+    ]
+  }
+}
